@@ -9,25 +9,25 @@ from ..faves.models import Frequency
 	# class Meta:
 	# 	model = Frequency
 
-class FilterMixin(object):
+# class FilterMixin(object):
 
-    def get_queryset_filters(self):
-        filters = {}
-        for item in self.allowed_filters:
-            if item in self.request.GET:
-                 filters[self.allowed_filters[item]] = self.request.GET[item]
-        return filters
+#     def get_queryset_filters(self):
+#         filters = {}
+#         for item in self.allowed_filters:
+#             if item in self.request.GET:
+#                  filters[self.allowed_filters[item]] = self.request.GET[item]
+#         return filters
 
-    def get_queryset(self):
-        return super(FilterMixin, self).get_queryset()\
-              .filter(**self.get_queryset_filters())
+#     def get_queryset(self):
+#         return super(FilterMixin, self).get_queryset()\
+#               .filter(**self.get_queryset_filters())
 
 
-class NameListView(FilterMixin, ListView):
+# class NameListView(FilterMixin, ListView):
 
-    allowed_filters = {
-        'gender': 'gender',
-        'state': 'state',
-        'year': 'year',
-    }
-    # no need to override get_queryset
+#     allowed_filters = {
+#         'gender': 'gender',
+#         'state': 'state',
+#         'year': 'year',
+#     }
+#     # no need to override get_queryset

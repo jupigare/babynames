@@ -24,12 +24,35 @@
 </div>
 
 <div class="content">
-	<form action="/filter" method="POST">
-	{% csrf_token %}
+	<form action="{% url 'pop:filter' %}" method="GET">
+		<p>Gender
+			<label>
+				<input type="radio" name="gender" value="">Both
+			</label>
+			<label>
+				<input type="radio" name="gender" value="M"> Male
+			</label>
+			<label>
+				<input type="radio" name="gender" value="F"> Female
+			</label>
+		</p>
+		<p>State<br />
+			<select name="state">
+				<option value="">All</option>
+				{% for s in states %}
+					<option value={{s.id}}>{{s.state}}</option>
+				{% endfor %}
+			</select>
+		</p>
+		<p>Year <br />
+			<input type="text" name="year">
+		</p>
+		<input type="submit" name="filter" value="Filter">
 	</form>
 	<table>
 		<thead><tr>
 			<td>Fave</td>
+			<td>Rank</td>
 			<td>Name</td>
 			<td>Number</td>
 		</tr></thead>
@@ -37,6 +60,7 @@
 			{% for n in names %}
 			<tr>
 				<td>(heart)</td>
+				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
 				<td>{{n.count}}</td>
 			</tr>
