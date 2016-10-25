@@ -5,8 +5,12 @@
 <title>Baby Names | Top 100 Popular Names</title>
 <meta charset="utf-8">
 {% load staticfiles %}
-<!-- <link rel="stylesheet" type="text/css" href="{ static '/style.css' }"> -->
-
+<!-- <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}"> -->
+<style type="text/css">
+	td.number {text-align: right;}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script type="text/javascript" src="{% static '/filter.js' %}"></script>
 </head>
 <body>
 
@@ -47,7 +51,8 @@
 		<p>Year <br />
 			<input type="text" name="year">
 		</p>
-		<input type="submit" name="filter" value="Filter">
+		<p><input type="submit" name="submit" value="Filter">
+		<input type="submit" name="submit" value="Reset"></p>
 	</form>
 	<table>
 		<thead><tr>
@@ -62,7 +67,7 @@
 				<td>(heart)</td>
 				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
-				<td>{{n.count}}</td>
+				<td class="number">{{n.count}}</td> <!--need to align right-->
 			</tr>
 			{% endfor %}
 		</tbody>
