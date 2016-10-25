@@ -10,6 +10,16 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = True
+        db_table = 'django_migrations'
+
+
 class Frequency(models.Model):
     state = models.CharField(max_length=2, blank=True, null=True)
     gender = models.CharField(max_length=1, blank=True, null=True)
