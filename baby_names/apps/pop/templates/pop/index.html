@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Baby Names | Top 100 Popular Names</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<!-- <link rel="stylesheet" type="text/css" href="{ static '/style.css' }"> -->
+
+</head>
+<body>
+
+<div class="header">
+	<h1>Top 100 Popular Names</h1>
+	<ul>
+		<li><a href="{ url 'login:index' }">Home</a></li>
+	{% if 'id' in request.session %}
+		<li><a href="{ url 'faves:index' }">Favorites</a></li>
+		<li><a href="{ url 'login:logout' }">Logout</a></li>
+	{% else %}
+		<li><a href="{ url 'login:login' }">Login/Register</a></li>
+	{% endif %}
+	</ul>
+</div>
+
+<div class="content">
+	<form action="/filter" method="POST">
+	{% csrf_token %}
+	</form>
+	<table>
+		<thead><tr>
+			<td>Fave</td>
+			<td>Name</td>
+			<td>Number</td>
+		</tr></thead>
+		<tbody>
+			{% for n in names %}
+			<tr>
+				<td>(heart)</td>
+				<td>{{n.name}}</td>
+				<td>{{n.count}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>
