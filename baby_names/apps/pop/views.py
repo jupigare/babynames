@@ -12,18 +12,19 @@ class Index(View):
 			request.session['stateFilter'] = 'every'
 			request.session['yearFilter'] = 'all'
 		if 'id' in request.session:
-			pass
 			faveList = Favorites.objects.filter(user_id=request.session['id'])
-			# faveList = Frequency.objects.filter(user__id=request.session['id'])
 			for n in faveList:
 				faveNames.append(n.frequency_id.name)
-				print n.frequency_id.name
 		names = Frequency.objects.raw(request.session['query'], request.session['name_dict'])[:100]
 		states = Frequency.objects.raw("select distinct state as id, state from frequency order by state")
+		years = []
+		for i in range(1910,2016):
+			years.append(i)
 		context = {
 			'names': names,
 			'faveNames': faveNames,
-			'states': states
+			'states': states,
+			'years': years
 		}
 		return render(request, 'pop/index.html', context)
 
@@ -64,7 +65,7 @@ class Filter(View):
 			query+=whereclause+groupby
 			request.session['query'] = query
 			request.session['name_dict'] = name_dict
-		elif request.GET['submit']=="Reset" and 'query' in request.session:
-			request.session.query.clear()
+		elif 'query' in request.session and request.GET['submit']=="Reset":
+			del request.session['query']
 
 		return redirect('/popular')
