@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Baby Names | Page Title Here</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{ static '/style.css' }">
+
+</head>
+<body>
+
+<div class="header">
+    <h1>HOME PAGE</h1>
+    <ul>
+    {% if 'id' in request.session %}
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+    {% endif %}
+    </ul>
+</div>
+
+<div class="content">
+    <!--put all your content here-->
+
+    <!-- <button><a href="">Favorites</a></button> -->
+    <button><a href="">Random Name Generator</a></button>
+    <button><a href="">Most Popular Names</a></button>
+    <button><a href="">Find My Name</a></button>
+</div>
+
+</body>
+</html>
