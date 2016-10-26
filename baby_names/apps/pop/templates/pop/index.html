@@ -38,8 +38,19 @@
 </div>
 
 <div class="content">
-	<h2>Results for gender {{request.session.genderFilter}}, state {{request.session.stateFilter}}, year {{request.session.yearFilter}}</h2>
+	<h2>Results for 
+		{% if request.session.genderFilter == 'M' %} males,
+			{% elif request.session.genderFilter == 'F' %} females,
+			{% else %} both males and females,
+		{% endif %}
+		{% if request.session.stateFilter == 'every' %} every state,
+			{% else %} {{request.session.stateFilter}},
+		{% endif %}
+		{% if request.session.yearFilter == 'all' %} every year from 1910-2015
+			{% else %} year {{request.session.yearFilter}}
+		{% endif %}</h2>
 	<form class="filters" action="{% url 'pop:filter' %}" method="GET">
+		<h3>Filter Results:</h3>
 		<p>Gender
 			<label>
 				<input type="radio" name="gender" value="">Both
@@ -86,6 +97,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	<button><a href="#"></a></button>
 </div>
 
 </body>
