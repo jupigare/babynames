@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Baby Names | Find</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>Find A Name</h1>
+    <ul>
+        <li><a href="{ url 'login:index' }">Home</a></li>
+    {% if 'id' in request.session %}
+        <li><a href="{ url 'faves:index' }">Favorites</a></li>
+        <li><a href="{ url 'login:logout' }">Logout</a></li>
+    {% else %}
+        <li><a href="{ url 'login:login' }">Login/Register</a></li>
+    {% endif %}
+    </ul>
+</div>
+
+<div class="content">
+    <!--put all your content here-->
+    <table>
+        <form action="find" method="POST">
+        {% csrf_token %}
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" name="nameSearch"></td>
+                <td><input type="submit" name="Search"></td>
+            </tr>
+        </form>
+        <tr>
+            <td colspan="2">({{result.name}}</td>
+        </tr>
+        <tr>
+            <td>Year</td>
+            <td>Count</td>
+        </tr>
+        {% for name in names %}
+        <tr>
+            <td>{{name.year}}</td>
+            <td>{{name.count}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
