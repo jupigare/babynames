@@ -3,6 +3,7 @@ from .. faves .models import Frequency
 # Create your views here.
 #
 import random
+import pdb
 
 def index(request):
     return render(request, 'rand/rand.html')
@@ -16,11 +17,25 @@ def index(request):
 #     return count
 
 def randName(request):
-    names = Frequency.objects.filter(gender = request.POST['gender'])
-    num = random.randint (0, len(names))
-    Rname = names[num].name
+    if (request.POST['gender'] == '0'):
+        names = Frequency.objects.all()
+
+    else:
+        names = Frequency.objects.filter(gender = request.POST['gender'])
+    x = len(names)
+    # print request.POST['gender']
+    print "length of name: ",len(names)
+    # default name is empty string
+
+
+    # have names
+    if len(names) > 0:
+        num = random.randint (0, len(names))
+        print num
+        Rname = names[num].name
+
     context = {
-    'name' : Rname
+        'name' : Rname
     }
     return render(request, 'rand/rand.html', context)
      # return redirect(reverse('rand:randName'), context)

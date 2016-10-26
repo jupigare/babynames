@@ -18,13 +18,16 @@
 <div class="content">
     <!--put all your content here-->
     <form action="{% url 'rand:randName' %}" method="post">
-    <!-- <form action="/random/randName" method="post"> -->
-        {% csrf_token %}
+
+    {% csrf_token %}
         <h2>Random Name generator: {% if name %}{{name}}{% endif %}</h2>
-        <label>Select the gender:
-        <input type="radio" name="gender" value="male" checked>Male
-        <input type="radio" name="gender" value="female" >Female
-        <input type="radio" name="gender" value="other"> Other</label>
+
+        <select name="gender">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="0">Both</option>
+
+        </select>
         <input type="submit" name="submit" value="Submit">
     </form>
 </div>
