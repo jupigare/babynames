@@ -44,7 +44,7 @@
 			{% else %} both males and females,
 		{% endif %}
 		{% if request.session.stateFilter == 'every' %} every state,
-			{% else %} {{request.session.stateFilter}},
+			{% else %} in the state of {{request.session.stateFilter}},
 		{% endif %}
 		{% if request.session.yearFilter == 'all' %} every year from 1910-2015
 			{% else %} year {{request.session.yearFilter}}
@@ -88,7 +88,11 @@
 			{% for n in names %}
 			<tr>
 				{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+					{% if n.name in faveNames %}
+					<td><a href="{% url 'faves:delfav' n.id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" /></a></td>
+					{% else %}
 					<td><a href="{% url 'faves:addfav' n.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" /></a></td>
+					{% endif %}
 				{% endif %}
 				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
@@ -97,7 +101,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<button><a href="#"></a></button>
+	<p><a href="#"><button>back to top</button></a></p>
 </div>
 
 </body>
