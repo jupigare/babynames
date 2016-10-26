@@ -7,7 +7,17 @@
 {% load staticfiles %}
 <!-- <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}"> -->
 <style type="text/css">
-	td.number {text-align: right;}
+	form.filters {
+		display:inline-block;
+		vertical-align:top;
+		width:25%;
+	}
+	table.pop_results {
+		display:inline-block;
+		vertical-align:top;
+		width:70%;
+	}
+	.pop_results td.number {text-align: right;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 <script type="text/javascript" src="{% static '/filter.js' %}"></script>
@@ -17,18 +27,19 @@
 <div class="header">
 	<h1>Top 100 Popular Names</h1>
 	<ul>
-		<li><a href="{ url 'login:index' }">Home</a></li>
+		<li><a href="{% url 'login:index' %}">Home</a></li>
 	{% if 'id' in request.session %}
-		<li><a href="{ url 'faves:index' }">Favorites</a></li>
-		<li><a href="{ url 'login:logout' }">Logout</a></li>
+		<li><a href="{% url 'faves:index' %}">Favorites</a></li>
+		<li><a href="{% url 'login:logout' %}">Logout</a></li>
 	{% else %}
-		<li><a href="{ url 'login:login' }">Login/Register</a></li>
+		<li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
 	{% endif %}
 	</ul>
 </div>
 
 <div class="content">
-	<form action="{% url 'pop:filter' %}" method="GET">
+	<h2>Results for gender {{request.session.genderFilter}}, state {{request.session.stateFilter}}, year {{request.session.yearFilter}}</h2>
+	<form class="filters" action="{% url 'pop:filter' %}" method="GET">
 		<p>Gender
 			<label>
 				<input type="radio" name="gender" value="">Both
@@ -48,13 +59,14 @@
 				{% endfor %}
 			</select>
 		</p>
-		<p>Year <br />
+		<p>Year (1910-2015) <br />
 			<input type="text" name="year">
 		</p>
 		<p><input type="submit" name="submit" value="Filter">
 		<input type="submit" name="submit" value="Reset"></p>
 	</form>
-	<table>
+
+	<table class="pop_results">
 		<thead><tr>
 			<td>Fave</td>
 			<td>Rank</td>
@@ -64,7 +76,7 @@
 		<tbody>
 			{% for n in names %}
 			<tr>
-				<td>(heart)</td>
+				<td><a href="{% url 'faves:add' n.id %}">(heart)</a></td>
 				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
 				<td class="number">{{n.count}}</td> <!--need to align right-->
