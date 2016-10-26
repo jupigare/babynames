@@ -88,7 +88,7 @@
 			{% for n in names %}
 			<tr>
 				{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
-					<td><a href="{% url 'faves:addfav' n.id %}">(heart)</a></td>
+					<td><a href="{% url 'faves:addfav' n.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" /></a></td>
 				{% endif %}
 				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
