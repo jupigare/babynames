@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Baby Names | Find</title>
+<title>Baby Names | Find request.session.nameSearch</title>
 <meta charset="utf-8">
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
@@ -25,30 +25,39 @@
 </div>
 
 <div class="content">
-    <!--put all your content here-->
     <table>
-        <form action="find" method="POST">
-        {% csrf_token %}
-            <tr>
+        <tr>
+            <form action="{% url 'find:find' '0' %}" method="POST">
+            {% csrf_token %}
                 <td>Name: </td>
                 <td><input type="text" name="nameSearch"></td>
-                <td><input type="submit" name="Search"></td>
-            </tr>
-        </form>
-        <tr>
-            <td colspan="2">({{result.name}}</td>
+                <td><input type="submit" name="Search" value="Search"></td>
+            </form>
+                <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td>
         </tr>
+    </table>
+    {% if 'nameSearch' in request.session %}
+    <h2>{{request.session.nameSearch}} 
+        {% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+            {% if request.session.nameSearch in faveNames %}
+            <a href="{% url 'faves:delfav' names.0.id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" /></a>
+            {% else %}
+            <a href="{% url 'faves:addfav' names.0.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" /></a>
+            {% endif %}
+        {% endif %}</h2>
+    <table>
         <tr>
             <td>Year</td>
             <td>Count</td>
         </tr>
         {% for name in names %}
-        <tr>
-            <td>{{name.year}}</td>
-            <td>{{name.count}}</td>
-        </tr>
+            <tr>
+                <td>{{name.year}}</td>
+                <td>{{name.count}}</td>
+            </tr>
         {% endfor %}
     </table>
+    {% endif %}
 </div>
 
 </body>
