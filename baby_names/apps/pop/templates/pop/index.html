@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Baby Names | Top 100 Popular Names</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}"> -->
+<style type="text/css">
+	form.filters {
+		display:inline-block;
+		vertical-align:top;
+		width:25%;
+	}
+	table.pop_results {
+		display:inline-block;
+		vertical-align:top;
+		width:70%;
+	}
+	.pop_results td.number {text-align: right;}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script type="text/javascript" src="{% static '/filter.js' %}"></script>
+</head>
+<body>
+
+<div class="header">
+	<h1>Top 100 Popular Names</h1>
+	<ul>
+		<li><a href="{% url 'login:home' %}">Home</a></li>
+	{% if 'id' in request.session %}
+		<li><a href="{% url 'faves:index' %}">Favorites</a></li>
+		<li><a href="{% url 'login:logout' %}">Logout</a></li>
+	{% else %}
+		<li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+	{% endif %}
+	</ul>
+</div>
+
+<div class="content">
+	<h2>Results for gender {{request.session.genderFilter}}, state {{request.session.stateFilter}}, year {{request.session.yearFilter}}</h2>
+	<form class="filters" action="{% url 'pop:filter' %}" method="GET">
+		<p>Gender
+			<label>
+				<input type="radio" name="gender" value="">Both
+			</label>
+			<label>
+				<input type="radio" name="gender" value="M"> Male
+			</label>
+			<label>
+				<input type="radio" name="gender" value="F"> Female
+			</label>
+		</p>
+		<p>State<br />
+			<select name="state">
+				<option value="">All</option>
+				{% for s in states %}
+					<option value={{s.id}}>{{s.state}}</option>
+				{% endfor %}
+			</select>
+		</p>
+		<p>Year (1910-2015) <br />
+			<input type="text" name="year">
+		</p>
+		<p><input type="submit" name="submit" value="Filter">
+		<input type="submit" name="submit" value="Reset"></p>
+	</form>
+
+	<table class="pop_results">
+		<thead><tr>
+			{% if 'id' in request.session %}<td>Fave</td>{% endif %}
+			<td>Rank</td>
+			<td>Name</td>
+			<td>Number</td>
+		</tr></thead>
+		<tbody>
+			{% for n in names %}
+			<tr>
+				{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+					<td><a href="{% url 'faves:addfav' n.id %}">(heart)</a></td>
+				{% endif %}
+				<td>{{forloop.counter}}</td>
+				<td>{{n.name}}</td>
+				<td class="number">{{n.count}}</td> <!--need to align right-->
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>
