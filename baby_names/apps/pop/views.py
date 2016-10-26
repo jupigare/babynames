@@ -16,7 +16,6 @@ class Index(View):
 			'names': names,
 			'states': states
 		}
-		print request.session['genderFilter']
 		return render(request, 'pop/index.html', context)
 
 class Filter(View):
