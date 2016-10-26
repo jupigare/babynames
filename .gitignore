@@ -1,2 +1,4 @@
 *.pyc
 py2DjangoEnv/
+babynames*.sql
+_ignoreme_*
