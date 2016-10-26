@@ -68,7 +68,7 @@
 
 	<table class="pop_results">
 		<thead><tr>
-			<td>Fave</td>
+			{% if 'id' in request.session %}<td>Fave</td>{% endif %}
 			<td>Rank</td>
 			<td>Name</td>
 			<td>Number</td>
@@ -76,7 +76,9 @@
 		<tbody>
 			{% for n in names %}
 			<tr>
-				<td><a href="{% url 'faves:addfav' n.id %}">(heart)</a></td>
+				{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+					<td><a href="{% url 'faves:addfav' n.id %}">(heart)</a></td>
+				{% endif %}
 				<td>{{forloop.counter}}</td>
 				<td>{{n.name}}</td>
 				<td class="number">{{n.count}}</td> <!--need to align right-->
