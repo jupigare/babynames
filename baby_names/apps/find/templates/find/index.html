@@ -14,12 +14,12 @@
 <div class="header">
     <h1>Find A Name</h1>
     <ul>
-        <li><a href="{ url 'login:index' }">Home</a></li>
+        <li><a href="{% url 'login:home' %}">Home</a></li>
     {% if 'id' in request.session %}
-        <li><a href="{ url 'faves:index' }">Favorites</a></li>
-        <li><a href="{ url 'login:logout' }">Logout</a></li>
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
     {% else %}
-        <li><a href="{ url 'login:login' }">Login/Register</a></li>
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
     {% endif %}
     </ul>
 </div>
