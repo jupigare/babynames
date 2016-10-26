@@ -4,19 +4,25 @@ from ..faves.models import Frequency, Favorites
 
 def index(request):
 	if 'nameSearch' in request.session:
-		query = "select id, name, year from frequency where name=%s group by year, name"
+		query = "select id, name, year, sum(count) as count from frequency where name=%s group by year, name"
 		name = {request.session['nameSearch']}
 		results = Frequency.objects.raw(query,name)
 		try :
 			results[0]
 		except IndexError:
 			del request.session['nameSearch']
+			pass
+		total = 0
+		for r in results:
+			total += int(r.count)
 		context = {
-			'names' : results
+			'names' : results,
+			'total' : total
 		}
 	else:
 		context = {
-			'names' : [{'id':0}]
+			'names' : [{'id':0}],
+			'total' : [0]
 		}
 	if 'id' in request.session:
 		faveNames = []
