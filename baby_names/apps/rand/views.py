@@ -20,15 +20,17 @@ def randName(request):
     if (request.POST['gender'] == '0'):
         names = Frequency.objects.all()
 
-    names = Frequency.objects.filter(gender = request.POST['gender'])
-    pdb.set_trace()
+    else:
+        names = Frequency.objects.filter(gender = request.POST['gender'])
+    x = len(names)
     # print request.POST['gender']
-    print len(names)
+    print "length of name: ",len(names)
     # default name is empty string
-    Rname = ''
+
+
     # have names
     if len(names) > 0:
-        num = random.randint (0, len(names)-1)
+        num = random.randint (0, len(names))
         print num
         Rname = names[num].name
 
