@@ -4,9 +4,9 @@
 
 <title>Baby Names | Page Title Here</title>
 <meta charset="utf-8">
-{% load staticfiles %}
+<!-- {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{ static '/style.css' }">
-
+ -->
 </head>
 <body>
 
@@ -24,7 +24,10 @@
 
 <div class="content">
     <!--put all your content here-->
-    {{user.username}}
+    {% for name in userlist %}
+        <p>{{name.frequency_id.name}} <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
+    {% endfor %}
+
 </div>
 
 </body>

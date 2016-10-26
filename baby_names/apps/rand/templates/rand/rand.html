@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Baby Names | Page Title Here</title>
+<meta charset="utf-8">
+<!-- {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{ static '/style.css' }"> -->
+
+</head>
+<body>
+
+<div class="header">
+    <h1>Page Title Here</h1>
+
+</div>
+
+<div class="content">
+    <!--put all your content here-->
+    <form action="{% url 'rand:randName' %}" method="post">
+    <!-- <form action="/random/randName" method="post"> -->
+        {% csrf_token %}
+        <h2>Random Name generator: {% if name %}{{name}}{% endif %}</h2>
+        <label>Select the gender:
+        <input type="radio" name="gender" value="male" checked>Male
+        <input type="radio" name="gender" value="female" >Female
+        <input type="radio" name="gender" value="other"> Other</label>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</div>
+
+</body>
+</html>
