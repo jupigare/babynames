@@ -16,7 +16,7 @@ def register(request):
 	else:
 		for error in result[1]:
 			messages.error(request, error)
-	return redirect('/home')
+	return redirect('/loginRegistration')
 
 def login(request):
 	result = User.objects.login(request.POST['user'], request.POST['password'])
@@ -26,7 +26,7 @@ def login(request):
 	else:
 		for error in result[1]:
 			messages.error(request, error)
-	return redirect('/')
+	return redirect('/loginRegistration')
 
 def home(request):
 	return render(request, 'login/home.html')

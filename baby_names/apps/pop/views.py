@@ -1,6 +1,14 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib import messages
 from django.views.generic import View
 from ..faves.models import Frequency, Favorites
+
+def isnumber(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 class Index(View):
 	def get(self, request):
@@ -12,18 +20,19 @@ class Index(View):
 			request.session['stateFilter'] = 'every'
 			request.session['yearFilter'] = 'all'
 		if 'id' in request.session:
-			pass
 			faveList = Favorites.objects.filter(user_id=request.session['id'])
-			# faveList = Frequency.objects.filter(user__id=request.session['id'])
 			for n in faveList:
 				faveNames.append(n.frequency_id.name)
-				print n.frequency_id.name
 		names = Frequency.objects.raw(request.session['query'], request.session['name_dict'])[:100]
 		states = Frequency.objects.raw("select distinct state as id, state from frequency order by state")
+		years = []
+		for i in range(1910,2016):
+			years.append(i)
 		context = {
 			'names': names,
 			'faveNames': faveNames,
-			'states': states
+			'states': states,
+			'years': years
 		}
 		return render(request, 'pop/index.html', context)
 
@@ -37,6 +46,8 @@ class Filter(View):
 
 
 		if request.GET['submit']=="Filter":
+			
+			##### Gender Filter #####
 			if 'gender' in request.GET and request.GET['gender']!="":
 				request.session['genderFilter'] = request.GET['gender']
 				whereclause += " and gender=%s"
@@ -44,6 +55,7 @@ class Filter(View):
 			else:
 				request.session['genderFilter'] = 'both'
 
+			##### State Filter #####
 			if request.GET['state']!="":
 				request.session['stateFilter'] = request.GET['state']
 				whereclause += " and state=%s"
@@ -52,19 +64,36 @@ class Filter(View):
 				request.session['stateFilter'] = 'every'
 
 
-			if 'year' not in request.GET or request.GET['year']=="":
-				pass
-			elif int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
-				request.session['yearFilter'] = request.GET['year']
-				whereclause += " and year=%s"
-				name_dict.append(request.GET['year'])
-			else:
+			##### Year Filters #####
+			if 'yearStart' in request.GET and 'yearEnd' in request.GET and request.GET['yearStart']>request.GET['yearEnd']:
+				messages.error(request, 'Invalid year range entered.', extra_tags='pop')
+			elif request.GET['yearStart']!="" or request.GET['yearEnd']!="":
+				if 'yearStart' in request.GET and request.GET:
+					request.session['yearFilter'] = "from "+request.GET['yearStart']+" to "
+					whereclause += " and year>=%s"
+					name_dict.append(int(request.GET['yearStart']))
+				else:
+					request.session['yearFilter'] = "from 1910 to "
+				if 'yearEnd' in request.GET:
+					request.session['yearFilter'] += request.GET['yearEnd']
+					whereclause += " and year<=%s"
+					name_dict.append(int(request.GET['yearEnd']))
+				else:
+					request.session['yearFilter'] += "2015"
+			elif 'year' not in request.GET and request.GET['year']=="" and request.GET['yearStart']=="" and request.GET['yearEnd']=="":
 				request.session['yearFilter'] = 'all'
-				print "Invalid year."
+			elif is_number(request.GET['year']) and isnumber(request.GET['year']):
+				if int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
+					request.session['yearFilter'] = request.GET['year']
+					whereclause += " and year=%s"
+					name_dict.append(request.GET['year'])
+			else:
+				messages.error(request, 'Invalid year entered.', extra_tags='pop')
+
 			query+=whereclause+groupby
 			request.session['query'] = query
 			request.session['name_dict'] = name_dict
-		elif request.GET['submit']=="Reset" and 'query' in request.session:
-			request.session.query.clear()
+		elif 'query' in request.session and request.GET['submit']=="Reset":
+			del request.session['query']
 
 		return redirect('/popular')

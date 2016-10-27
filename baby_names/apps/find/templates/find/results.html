@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Baby Names | Find {{request.session.nameSearch}}</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>Find A Name</h1>
+    <ul>
+        <li><a href="{% url 'login:home' %}">Home</a></li>
+    {% if 'id' in request.session %}
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+    {% endif %}
+    </ul>
+</div>
+
+<div class="content">
+    <table>
+        <tr>
+            <form action="{% url 'find:find' '0' %}" method="POST">
+            {% csrf_token %}
+                <td>Name: </td>
+                <td><input type="text" name="nameSearch"></td>
+                <td><input type="submit" name="Search" value="Search"></td>
+            </form>
+                <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td>
+        </tr>
+    </table>
+
+    {% if messages %}{% for message in messages %}{% if 'find' in message.tags %}<h2 class="{{ message.tags }}">{{ message }}</h2>{% endif %}{% endfor %}{% endif %}
+
+    {% if 'nameSearch' in request.session %}
+    <h2>{{request.session.nameSearch}} </h2>
+    <h3>{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+            {% if request.session.nameSearch in faveNames %}
+            <a href="{% url 'faves:delfav' names.0.id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" />Remove from Favorites</a>
+            {% else %}
+            <a href="{% url 'faves:addfav' names.0.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" />Add to Favorites</a>
+            {% endif %}
+        {% endif %}</h3>
+    <h3>Total: {{total}}</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Year</td>
+                <td>Count</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for name in names %}
+            <tr>
+                <td>{{name.year}}</td>
+                <td>{{name.count}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+</body>

@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from .models import Frequency, Favorites
 from ..login.models import User
+from twython import Twython, TwythonError
+
+t = Twython(
+	'SWiUdCQsxyRe2uJ32Iq26L9bj',
+	'z5bggykXFGKGPbnoXQVOg4kXJuXFbauNnc5Qd7aISoKs72hGxm'
+	)
 
 # Create your views here.
 def index(request):
@@ -9,8 +15,9 @@ def index(request):
 	names = Frequency.objects.all()
 	user = User.objects.get(id = request.session['id'])	
 	userlist = Favorites.objects.filter(user_id = request.session['id'])
-	print userlist
-	context = {'user':user, 'userlist': userlist, 'names':names}
+	results = t.search(q="#babynamesdaily", count = 10)
+	all_tweets = results['statuses']
+	context = {'user':user, 'userlist': userlist, 'names':names, 'all_tweets':all_tweets}
 	return render(request, 'faves/index.html', context)
 
 def addfav(request, id):

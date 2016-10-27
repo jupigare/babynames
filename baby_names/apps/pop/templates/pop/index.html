@@ -5,8 +5,11 @@
 <title>Baby Names | Top 100 Popular Names</title>
 <meta charset="utf-8">
 {% load staticfiles %}
-<!-- <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}"> -->
-<style type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <style type="text/css">
 	form.filters {
 		display:inline-block;
 		vertical-align:top;
@@ -18,9 +21,7 @@
 		width:70%;
 	}
 	.pop_results td.number {text-align: right;}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-<script type="text/javascript" src="{% static '/filter.js' %}"></script>
+</style> -->
 </head>
 <body>
 
@@ -73,16 +74,32 @@
 		<p>Year (1910-2015) <br />
 			<input type="text" name="year">
 		</p>
+		<p>Year Range <br />
+			<select name="yearStart">
+				<option value="">All</option>
+				{% for y in years %}
+					<option value={{y}}>{{y}}</option>
+				{% endfor %}
+			</select>
+			<select name="yearEnd">
+				<option value="">All</option>
+				{% for y in years %}
+					<option value={{y}}>{{y}}</option>
+				{% endfor %}
+			</select>
+		</p>
 		<p><input type="submit" name="submit" value="Filter">
 		<input type="submit" name="submit" value="Reset"></p>
 	</form>
+
+    {% if messages %}{% for message in messages %}{% if 'pop' in message.tags %}<h2 class="{{ message.tags }}">{{ message }}</h2>{% endif %}{% endfor %}{% endif %}
 
 	<table class="pop_results">
 		<thead><tr>
 			{% if 'id' in request.session %}<td>Fave</td>{% endif %}
 			<td>Rank</td>
 			<td>Name</td>
-			<td>Number</td>
+			<td>Count</td>
 		</tr></thead>
 		<tbody>
 			{% for n in names %}

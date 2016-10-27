@@ -1,9 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<title>Baby Names | Home</title>
+<title>Baby Names | Find a Name</title>
 <meta charset="utf-8">
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
@@ -14,8 +12,9 @@
 <body>
 
 <div class="header">
-    <h1>Home</h1>
+    <h1>Find A Name</h1>
     <ul>
+        <li><a href="{% url 'login:home' %}">Home</a></li>
     {% if 'id' in request.session %}
         <li><a href="{% url 'faves:index' %}">Favorites</a></li>
         <li><a href="{% url 'login:logout' %}">Logout</a></li>
@@ -26,13 +25,19 @@
 </div>
 
 <div class="content">
-    <!--put all your content here-->
+    <table>
+        <tr>
+            <form action="{% url 'find:find' '0' %}" method="POST">
+            {% csrf_token %}
+                <td>Name: </td>
+                <td><input type="text" name="nameSearch"></td>
+                <td><input type="submit" name="Search" value="Search"></td>
+            </form>
+                <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td>
+        </tr>
+    </table>
 
-    <!-- <button><a href="">Favorites</a></button> -->
-    <button><a href="{% url 'rand:index' %}">Random Name Generator</a></button>
-    <button><a href="{% url 'pop:index' %}">Most Popular Names</a></button>
-    <button><a href="{% url 'find:index' %}">Find My Name</a></button>
+    {% if messages %}{% for message in messages %}{% if 'find' in message.tags %}<h2 class="{{ message.tags }}">{{ message }}</h2>{% endif %}{% endfor %}{% endif %}
 </div>
 
 </body>
-</html>
