@@ -7,6 +7,9 @@
 <!-- {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{ static '/style.css' }">
  -->
+
+<!-- JQUERY -->
+
 </head>
 <body>
 
@@ -27,7 +30,9 @@
     {% for name in userlist %}
         <p>{{name.frequency_id.name}} <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
     {% endfor %}
-
+    {% for tweet in all_tweets %}
+        <p>{{tweet.text}}</p>
+    {% endfor %}
 </div>
 
 </body>
