@@ -8,16 +8,13 @@ t = Twython(
 	'z5bggykXFGKGPbnoXQVOg4kXJuXFbauNnc5Qd7aISoKs72hGxm'
 	)
 
-# Create your views here.
 def index(request):
 	# if 'freqid' in request.session:
 	# 	favorite = Favorites.objects.filter(user_id = request.session['id'])
 	names = Frequency.objects.all()
 	user = User.objects.get(id = request.session['id'])	
 	userlist = Favorites.objects.filter(user_id = request.session['id'])
-	results = t.search(q="#babynamesdaily", count = 10)
-	all_tweets = results['statuses']
-	context = {'user':user, 'userlist': userlist, 'names':names, 'all_tweets':all_tweets}
+	context = {'user':user, 'userlist': userlist, 'names':names}
 	return render(request, 'faves/index.html', context)
 
 def addfav(request, id):
