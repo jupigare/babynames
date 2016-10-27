@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib import messages
 from django.urls import reverse
 from ..faves.models import Frequency, Favorites
 
@@ -10,6 +11,7 @@ def index(request):
 		try :
 			results[0]
 		except IndexError:
+			messages.error(request, 'Sorry, name'+request.session['nameSearch']+'was not found.')
 			del request.session['nameSearch']
 			pass
 		total = 0

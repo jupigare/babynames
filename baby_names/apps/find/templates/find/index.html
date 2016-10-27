@@ -36,6 +36,7 @@
                 <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td>
         </tr>
     </table>
+    <h2 class="messages error">{% if messages %}{% for message in messages %} {{message}} {% endfor %} {% endif %} </h2>
     {% if 'nameSearch' in request.session %}
     <h2>{{request.session.nameSearch}} </h2>
     <h3>{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
