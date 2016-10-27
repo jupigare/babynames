@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<title>Baby Names | Page Title Here</title>
+<title>Baby Names | My Favorites</title>
 <meta charset="utf-8">
 <!-- {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{ static '/style.css' }">
@@ -14,7 +14,7 @@
 <body>
 
 <div class="header">
-    <h1>FAVORITES LIST</h1>
+    <h1>My Favorites</h1>
     <ul>
         <li><a href="{% url 'login:home' %}">Home</a></li>
     {% if 'id' in request.session %}
@@ -26,9 +26,8 @@
 </div>
 
 <div class="content">
-    <!--put all your content here-->
     {% for name in userlist %}
-        <p>{{name.frequency_id.name}} <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
+        <p><a href="{% url 'find:find' name.frequency_id.name %}">{{name.frequency_id.name}}</a> <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
     {% endfor %}
     {% for tweet in all_tweets %}
         <p>{{tweet.text}}</p>
