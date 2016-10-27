@@ -16,9 +16,21 @@ def index(request):
 	userlist = Favorites.objects.filter(user_id = request.session['id'])
 	results = t.search(q="#babynamesdaily", count = 10)
 	all_tweets = results['statuses']
-	# for tw in all_tweets:
-	# 	print tw
-	context = {'user':user, 'userlist': userlist, 'names':names, 'all_tweets':all_tweets}
+	allTweets=[]
+	for tw in all_tweets:
+		eachTweet = tw['text'].split('\n')
+		temp = []
+		for i in eachTweet:
+			i = i.encode()
+			temp2=i.split(':')
+			if temp2 == ['Gender', ' GIRL']:
+				temp2 = ['Gender', 'Female']
+			elif temp2 == ['Gender', ' BOY']:
+				temp2 = ['Gender', 'Male']
+			temp.append(temp2)
+		allTweets.append([temp[0][1].strip(),temp[1][1].strip(),temp[2][1],temp[3][1]])
+	print allTweets
+	context = {'user':user, 'userlist': userlist, 'names':names, 'all_tweets':allTweets}
 	return render(request, 'faves/index.html', context)
 
 def addfav(request, id):
