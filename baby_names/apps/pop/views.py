@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views.generic import View
 from ..faves.models import Frequency, Favorites
 
-def is_number(s):
+def isnumber(s):
     try:
         float(s)
         return True

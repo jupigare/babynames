@@ -5,13 +5,13 @@ from ..faves.models import Frequency, Favorites
 
 def index(request):
 	if 'nameSearch' in request.session:
-		query = "select id, name, year, FORMAT(sum(count), 0) as count from frequency where name=%s group by year, name"
+		query = "select id, name, year, sum(count) as count from frequency where name=%s group by year, name"
 		name = {request.session['nameSearch']}
 		results = Frequency.objects.raw(query,name)
 		try :
 			results[0]
 		except IndexError:
-			messages.error(request, 'Sorry, name'+request.session['nameSearch']+'was not found.', extra_tags='find')
+			messages.error(request, 'Sorry, name '+request.session['nameSearch']+' was not found.', extra_tags='find')
 			del request.session['nameSearch']
 			pass
 		total = 0
