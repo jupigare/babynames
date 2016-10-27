@@ -1,7 +1,14 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.views.generic import View
+
 from ..faves.models import Frequency, Favorites
+
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.models import Title
+from bokeh.embed import components
+
 
 class Index(View):
 	def get(self, request):
@@ -26,21 +33,36 @@ class Results(View):
 		except IndexError:
 			messages.error(request, 'Sorry, name '+request.session['nameSearch']+' was not found.', extra_tags='find')
 			del request.session['nameSearch']
-			pass
+			return redirect(reverse('find:index'))
 		total = 0
+		x_axis=[]
+		y_axis=[]
 		for r in results:
 			total += int(r.count)
+			x_axis.append(r.year)
+			y_axis.append(r.count)
 		context = {
 			'names' : results,
 			'total' : total
 		}
+
+		### Making the Graph ###
+		p = figure(title=request.session['nameSearch'], plot_width=800, plot_height=450)
+		p.line(x_axis, y_axis, line_width=2)
+		p.add_layout(Title(text="Year", align="center"), "below")
+		p.add_layout(Title(text="Count", align="center"), "left")
+		script, div = components(p, CDN)
+		context['bokehScript'] = script
+		context['bokehDiv'] = div
+
 		if 'id' in request.session:
 			faveNames = []
 			faveList = Favorites.objects.filter(user_id=request.session['id'])
 			for n in faveList:
 				faveNames.append(n.frequency_id.name)
 			context['faveNames']=faveNames
-		return render(request, 'find/results.html', context)
+		
+		return render(request, 'find/graph.html', context)
 
 class Reset(View):
 	def get(self, request):
