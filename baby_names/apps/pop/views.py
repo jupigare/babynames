@@ -38,6 +38,8 @@ class Filter(View):
 
 
 		if request.GET['submit']=="Filter":
+			
+			##### Gender Filter #####
 			if 'gender' in request.GET and request.GET['gender']!="":
 				request.session['genderFilter'] = request.GET['gender']
 				whereclause += " and gender=%s"
@@ -45,6 +47,7 @@ class Filter(View):
 			else:
 				request.session['genderFilter'] = 'both'
 
+			##### State Filter #####
 			if request.GET['state']!="":
 				request.session['stateFilter'] = request.GET['state']
 				whereclause += " and state=%s"
@@ -53,15 +56,27 @@ class Filter(View):
 				request.session['stateFilter'] = 'every'
 
 
-			if 'year' not in request.GET or request.GET['year']=="":
-				pass
+			##### Year Filters #####
+			if 'year' not in request.GET and request.GET['year']=="" and 'yearStart' not in request.GET and 'yearEnd' not in request.GET:
+				request.session['yearFilter'] = 'all'
 			elif int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
 				request.session['yearFilter'] = request.GET['year']
 				whereclause += " and year=%s"
 				name_dict.append(request.GET['year'])
 			else:
-				request.session['yearFilter'] = 'all'
-				print "Invalid year."
+				if 'yearStart' in request.GET:
+					request.session['yearFilter'] = "from "+request.GET['yearStart']+" to "
+					whereclause += " and year>=%s"
+					name_dict.append(request.GET['yearStart'])
+				else:
+					request.session['yearFilter'] = "from 1910 to "
+				if 'yearEnd' in request.GET:
+					request.session['yearFilter'] = request.GET['yearEnd']
+					whereclause += " year<=%s"
+					name_dict.append(request.GET['yearEnd'])
+				else:
+					request.session['yearFilter'] = "2015"
+
 			query+=whereclause+groupby
 			request.session['query'] = query
 			request.session['name_dict'] = name_dict
