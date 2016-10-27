@@ -2,41 +2,52 @@
 <html lang="en">
 <head>
 
-<title>Baby Names | random names</title>
+<title>Baby Names | Random Name Generator</title>
 <meta charset="utf-8">
-<!-- {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{ static '/style.css' }"> -->
-
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 
 <div class="header">
-
-
+    <h1>Find A Name</h1>
+    <ul>
+        <li><a href="{% url 'login:home' %}">Home</a></li>
+    {% if 'id' in request.session %}
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+    {% endif %}
+    </ul>
 </div>
 
 <div class="content">
     <!--put all your content here-->
-    <form action="{% url 'rand:randName' %}" method="post">
+    <form action="{% url 'rand:new' %}" method="post">
 
     {% csrf_token %}
-        <h2>Random Name generator: {% if name %}{{name}}{% endif %}</h2>
-        <input type="hidden" name="id" value="{{id}}">
+        <h2>Random Name Generator:</h2>
+        {% if name %}
+            <h2><a href="{% url 'find:find' name %}">{{name}}</a></h2>
+            <h3>{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
+                {% if name in faveNames %}
+                <a href="{% url 'faves:delfav' id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" />Remove from Favorites</a>
+                {% else %}
+                <a href="{% url 'faves:addfav' id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" />Add to Favorites</a>
+                {% endif %}
+            {% endif %}</h3>
+                <input type="hidden" name="id" value="{{id}}">
+        {% endif %}
 
-        <!-- <select name="gender">
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="0">Both</option>
-
-        </select> -->
-        <label>Select the gender:
-        <input type="radio" name="gender" value="M" checked>Male
+        <p>Select the gender:</p>
+        <p><input type="radio" name="gender" value="M">Male
         <input type="radio" name="gender" value="F" >Female
-        <input type="radio" name="gender" value="0"> Both
+        <input type="radio" name="gender" value="0" checked> Both</p>
         <input type="submit" name="submit" value="Submit">
-
-
-
     </form>
 </div>
 

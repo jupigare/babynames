@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from .. faves .models import Frequency
-# Create your views here.
-#
+from .. faves .models import Frequency, Favorites
+
 import random
 import pdb
 
@@ -39,7 +38,7 @@ def index(request):
 #     }
 #     return render(request, 'rand/rand.html', context)
      # return redirect(reverse('rand:randName'), context)
-def randName(request):
+def new(request):
     # print Frequency._meta.db_table
     # Frequency.objects.raw("select distinct id, name, gender from frequency group by name")
     # query = "SELECT COUNT(*) as id FROM frequency"
@@ -48,25 +47,42 @@ def randName(request):
     # for i in results:
     #     print i
     #-------------the following are good!!!!$$$$$
-    query = "select distinct id, name, gender from frequency group by name"
-    results = Frequency.objects.raw(query)
-    listA = []
-    gender = request.POST['gender']
-    if (gender =='0'):
-        for i in results:
-            listA.append(i.name)
+    query = "select id, name, gender from frequency"
+    if request.method=="GET" or request.POST['gender'] == "0":
+        gender=""
     else:
-        for i in results:
-            if i.gender ==gender:
-                listA.append(i.name)
+        query += " where gender=%s"
+        gender=request.POST['gender']
+    query +=  " group by name, gender"
+    print query
+    results = Frequency.objects.raw(query,(gender))
+    names = []
+    for i in results:
+        names.append(i)
+    # query = "select distinct id, name, gender from frequency group by name"
+    # results = Frequency.objects.raw(query)
+    # listA = []
+    # gender = request.POST['gender']
+    # if (gender =='0'):
+    #     for i in results:
+    #         listA.append(i.name)
+    # else:
+    #     for i in results:
+    #         if i.gender == gender:
+    #             listA.append(i.name)
 
-    num = len(listA)
-    x = random.randint(0, num-1)
-    Rname = listA[x]
-    users = Frequency.objects.filter(name = Rname)
+    randNum = random.randint(0, len(names)-1)
+    randName = names[randNum]
     context = {
-    "name": Rname,
-    "id": users[0].id
+        "name": randName.name,
+        "id": randName.id
     }
+
+    if 'id' in request.session:
+        faveNames = []
+        faveList = Favorites.objects.filter(user_id=request.session['id'])
+        for n in faveList:
+            faveNames.append(n.frequency_id.name)
+        context['faveNames']=faveNames    
 
     return render(request, 'rand/rand.html', context)

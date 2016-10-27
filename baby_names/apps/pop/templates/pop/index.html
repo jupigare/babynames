@@ -112,7 +112,7 @@
 					{% endif %}
 				{% endif %}
 				<td>{{forloop.counter}}</td>
-				<td>{{n.name}}</td>
+				<td><a href="{% url 'find:find' n.name %}">{{n.name}}</a></td>
 				<td class="number">{{n.count}}</td> <!--need to align right-->
 			</tr>
 			{% endfor %}
