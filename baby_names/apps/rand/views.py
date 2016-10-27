@@ -53,12 +53,15 @@ def randName(request):
     listA = []
     gender = request.POST['gender']
     if (gender =='0'):
-        for i in results:
-            listA.append(i.name)
+        query = "select id, name from frequency"
+        results = Frequency.objects.raw(query)
+        x = random.randint(0, len(results)-1)
+        name = results[x].name
     else:
-        for i in results:
-            if i.gender ==gender:
-                listA.append(i.name)
+        query = "select id, name, gender from frequency where gender=" + gender
+        results = Frequency.objects.raw(query)
+        x = random.randint(0, len(results)-1)
+        name = results[x].name
 
     num = len(listA)
     x = random.randint(0, num-1)
