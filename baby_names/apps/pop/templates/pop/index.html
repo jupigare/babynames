@@ -71,17 +71,23 @@
 				{% endfor %}
 			</select>
 		</p>
-		<p>Year <br />
-			<select name="year">
+		<p>Year (1910-2015) <br />
+			<input type="text" name="year">
+		</p>
+		<p>Year Range <br />
+			<select name="yearStart">
+				<option value="">All</option>
+				{% for y in years %}
+					<option value={{y}}>{{y}}</option>
+				{% endfor %}
+			</select>
+			<select name="yearEnd">
 				<option value="">All</option>
 				{% for y in years %}
 					<option value={{y}}>{{y}}</option>
 				{% endfor %}
 			</select>
 		</p>
-<!-- 		<p>Year (1910-2015) <br />
-			<input type="text" name="year">
-		</p> -->
 		<p><input type="submit" name="submit" value="Filter">
 		<input type="submit" name="submit" value="Reset"></p>
 	</form>

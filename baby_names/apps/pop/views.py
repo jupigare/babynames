@@ -15,6 +15,7 @@ class Index(View):
 			faveList = Favorites.objects.filter(user_id=request.session['id'])
 			for n in faveList:
 				faveNames.append(n.frequency_id.name)
+		print request.session['query']
 		names = Frequency.objects.raw(request.session['query'], request.session['name_dict'])[:100]
 		states = Frequency.objects.raw("select distinct state as id, state from frequency order by state")
 		years = []
@@ -57,25 +58,29 @@ class Filter(View):
 
 
 			##### Year Filters #####
-			if 'year' not in request.GET and request.GET['year']=="" and 'yearStart' not in request.GET and 'yearEnd' not in request.GET:
-				request.session['yearFilter'] = 'all'
+			if 'yearStart' in request.GET and 'yearEnd' in request.GET and int(request.GET['yearStart'])>int(request.GET['yearEnd']):
+				print "Error: Invalid year range entered."
+			elif 'yearStart' in request.GET or 'yearEnd' in request.GET:
+				if 'yearStart' in request.GET:
+					request.session['yearFilter'] = "from "+request.GET['yearStart']+" to "
+					whereclause += " and year>=%s"
+					name_dict.append(int(request.GET['yearStart']))
+				else:
+					request.session['yearFilter'] = "from 1910 to "
+				if 'yearEnd' in request.GET:
+					request.session['yearFilter'] += request.GET['yearEnd']
+					whereclause += " and year<=%s"
+					name_dict.append(int(request.GET['yearEnd']))
+				else:
+					request.session['yearFilter'] += "2015"
 			elif int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
 				request.session['yearFilter'] = request.GET['year']
 				whereclause += " and year=%s"
 				name_dict.append(request.GET['year'])
+			elif 'year' not in request.GET and request.GET['year']=="" and 'yearStart' not in request.GET and 'yearEnd' not in request.GET:
+				request.session['yearFilter'] = 'all'
 			else:
-				if 'yearStart' in request.GET:
-					request.session['yearFilter'] = "from "+request.GET['yearStart']+" to "
-					whereclause += " and year>=%s"
-					name_dict.append(request.GET['yearStart'])
-				else:
-					request.session['yearFilter'] = "from 1910 to "
-				if 'yearEnd' in request.GET:
-					request.session['yearFilter'] = request.GET['yearEnd']
-					whereclause += " year<=%s"
-					name_dict.append(request.GET['yearEnd'])
-				else:
-					request.session['yearFilter'] = "2015"
+				print "Error: Invalid year entered."
 
 			query+=whereclause+groupby
 			request.session['query'] = query
