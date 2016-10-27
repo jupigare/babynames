@@ -28,3 +28,7 @@ class Favorites(models.Model):
     frequency_id = models.ForeignKey(Frequency)
     user_id = models.ForeignKey(User)
     # rating = models.IntegerField(blank=True, null=True)
+
+# class newnames(models.Model):
+#     user_id = models.ForeignKey(User)
+#     name = models.CharField(max_length=40)
