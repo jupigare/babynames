@@ -11,7 +11,7 @@ def index(request):
 		try :
 			results[0]
 		except IndexError:
-			messages.error(request, 'Sorry, name'+request.session['nameSearch']+'was not found.')
+			messages.error(request, 'Sorry, name'+request.session['nameSearch']+'was not found.', extra_tags='find')
 			del request.session['nameSearch']
 			pass
 		total = 0

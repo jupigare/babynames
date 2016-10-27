@@ -92,6 +92,8 @@
 		<input type="submit" name="submit" value="Reset"></p>
 	</form>
 
+    {% if messages %}{% for message in messages %}{% if 'pop' in message.tags %}<h2 class="{{ message.tags }}">{{ message }}</h2>{% endif %}{% endfor %}{% endif %}
+
 	<table class="pop_results">
 		<thead><tr>
 			{% if 'id' in request.session %}<td>Fave</td>{% endif %}
