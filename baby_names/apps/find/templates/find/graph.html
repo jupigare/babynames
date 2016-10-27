@@ -46,29 +46,15 @@
     <h2>{{request.session.nameSearch}} </h2>
     <h3>{% if 'id' in request.session %} <!--heart only shows when user is logged in -->
             {% if request.session.nameSearch in faveNames %}
-            <a href="{% url 'faves:delfav' names.0.id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" />Remove from Favorites</a>
+            <a href="{% url 'faves:delfav' names.id %}"><img src="{% static '/images/heart_full.png' %}" alt="Remove From Favorites" />Remove from Favorites</a>
             {% else %}
-            <a href="{% url 'faves:addfav' names.0.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" />Add to Favorites</a>
+            <a href="{% url 'faves:addfav' names.id %}"><img src="{% static '/images/heart_empty.png' %}" alt="Add to Favorites" />Add to Favorites</a>
             {% endif %}
         {% endif %}</h3>
     <h3>Total: {{total}}</h3>
-    {{bokehDiv|safe}}
-    <table>
-        <thead>
-            <tr>
-                <td>Year</td>
-                <td>Count</td>
-            </tr>
-        </thead>
-        <tbody>
-        {% for name in names %}
-            <tr>
-                <td>{{name.year}}</td>
-                <td>{{name.count}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    
+    <div class="resultsGraph">{{bokehDiv|safe}}</div>
+    
     {% endif %}
 </div>
 

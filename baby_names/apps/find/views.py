@@ -4,9 +4,9 @@ from django.views.generic import View
 
 from ..faves.models import Frequency, Favorites
 
-from bokeh.plotting import figure
+from bokeh.plotting import figure, ColumnDataSource
 from bokeh.resources import CDN
-from bokeh.models import Title
+from bokeh.models import Title, HoverTool
 from bokeh.embed import components
 
 
@@ -35,21 +35,56 @@ class Results(View):
 			del request.session['nameSearch']
 			return redirect(reverse('find:index'))
 		total = 0
-		x_axis=[]
-		y_axis=[]
+		year=[]
+		count=[]
 		for r in results:
 			total += int(r.count)
-			x_axis.append(r.year)
-			y_axis.append(r.count)
+			year.append(r.year)
+			count.append(r.count)
 		context = {
-			'names' : results,
+			'names' : results[0],
 			'total' : total
 		}
 
 		### Making the Graph ###
-		p = figure(title=request.session['nameSearch'], plot_width=800, plot_height=450)
-		p.line(x_axis, y_axis, line_width=2)
-		p.add_layout(Title(text="Year", align="center"), "below")
+		source = ColumnDataSource(
+			data=dict(
+				# x=x_axis,
+				year=year,
+				# y=y_axis,
+				count=count,
+			)
+		)
+		# hover = HoverTool(tooltips="""
+	 #		<table class="tooltips">
+	 #			<tr>
+	 #				<td>Birth Year</td>
+	 #				<td>@year</td>
+	 #			</tr>
+	 #			<tr>
+	 #				<td>Count</td>
+	 #				<td>@count</td>
+	 #			</tr>
+	 #		</table>
+	 #		"""
+		# )
+		p = figure(plot_width=800, plot_height=450, tools=['hover','pan','wheel_zoom','reset','save'], active_drag="pan", active_scroll="wheel_zoom")
+		p.line(year,count,source=source, line_width=2)
+		hover = p.select(dict(type=HoverTool))
+		hover.tooltips = """
+			<table class="tooltips">
+				<tr>
+					<td>Birth Year</td>
+					<td>@year</td>
+				</tr>
+				<tr>
+					<td>Count</td>
+					<td>@count</td>
+				</tr>
+			</table>
+			"""
+		hover.mode = 'mouse'
+		p.add_layout(Title(text="Birth Year", align="center"), "below")
 		p.add_layout(Title(text="Count", align="center"), "left")
 		script, div = components(p, CDN)
 		context['bokehScript'] = script
@@ -78,7 +113,7 @@ class Reset(View):
 
 # Create your views here.
 # def index(request):
-#    return render(request, 'find/index.html')
+#	return render(request, 'find/index.html')
 
 # def find(request):
 # 	if request.method == "POST":
