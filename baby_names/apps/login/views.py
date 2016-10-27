@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from .models import User
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from twython import Twython, TwythonError
 
-# Create your views here.
+t = Twython(
+	'SWiUdCQsxyRe2uJ32Iq26L9bj',
+	'z5bggykXFGKGPbnoXQVOg4kXJuXFbauNnc5Qd7aISoKs72hGxm'
+	)
+
 def index(request):
 	return render(request, 'login/index.html')
 
@@ -29,7 +34,24 @@ def login(request):
 	return redirect('/loginRegistration')
 
 def home(request):
-	return render(request, 'login/home.html')
+	results = t.search(q="#babynamesdaily", count = 10)
+	all_tweets = results['statuses']
+	allTweets=[]
+	for tw in all_tweets:
+		eachTweet = tw['text'].split('\n')
+		temp = []
+		for i in eachTweet:
+			i = i.encode()
+			temp2=i.split(':')
+			if temp2 == ['Gender', ' GIRL']:
+				temp2 = ['Gender', 'Female']
+			elif temp2 == ['Gender', ' BOY']:
+				temp2 = ['Gender', 'Male']
+			temp.append(temp2)
+		allTweets.append([temp[0][1].strip(),temp[1][1].strip(),temp[2][1],temp[3][1]])
+	print allTweets
+	context = {'all_tweets':allTweets}
+	return render(request, 'login/home.html', context)
 
 def logout(request):
 	request.session.flush()

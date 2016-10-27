@@ -29,24 +29,6 @@
     {% for name in userlist %}
         <p><a href="{% url 'find:find' name.frequency_id.name %}">{{name.frequency_id.name}}</a> <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
     {% endfor %}
-    
-    <h2>Daily Twitter Picks</h2>
-    <table>
-        <thead><tr>
-            <td>Name</td>
-            <td>Gender</td>
-            <td>Percentage of Population</td>
-        </tr></thead>
-        <tbody>
-        {% for tweet in all_tweets %}
-            <tr>
-                <td><a href="{% url 'find:find' tweet.0 %}">{{tweet.0}}</a></td>
-                <td>{{tweet.1}}</td>
-                <td>{{tweet.3}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 </div>
 
 </body>
