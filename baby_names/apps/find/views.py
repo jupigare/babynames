@@ -1,10 +1,23 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-from django.urls import reverse
+from django.views.generic import View
 from ..faves.models import Frequency, Favorites
 
-def index(request):
-	if 'nameSearch' in request.session:
+class Index(View):
+	def get(self, request):
+		return render(request, 'find/index.html')
+	
+class Find(View):
+	def get(self, request, name):
+		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
+		return redirect(reverse('find:results', kwargs={'name': name}))
+	def post(self, request, name):
+		name = request.POST['nameSearch']
+		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
+		return redirect(reverse('find:results', kwargs={'name': name}))
+
+class Results(View):
+	def get(self, request, name):
 		query = "select id, name, year, sum(count) as count from frequency where name=%s group by year, name"
 		name = {request.session['nameSearch']}
 		results = Frequency.objects.raw(query,name)
@@ -21,28 +34,25 @@ def index(request):
 			'names' : results,
 			'total' : total
 		}
-	else:
-		context = {
-			'names' : [{'id':0}],
-			'total' : [0]
-		}
-	if 'id' in request.session:
-		faveNames = []
-		faveList = Favorites.objects.filter(user_id=request.session['id'])
-		for n in faveList:
-			faveNames.append(n.frequency_id.name)
-		context['faveNames']=faveNames
-	return render(request, 'find/index.html', context)
-	
-def find(request,name):
-	if request.method == "POST":
-		name = request.POST['nameSearch']
-	request.session['nameSearch'] = name[0].upper() + name[1:].lower()
-	return redirect(reverse('find:index'))
+		if 'id' in request.session:
+			faveNames = []
+			faveList = Favorites.objects.filter(user_id=request.session['id'])
+			for n in faveList:
+				faveNames.append(n.frequency_id.name)
+			context['faveNames']=faveNames
+		return render(request, 'find/results.html', context)
 
-def reset(request):
-	del request.session['nameSearch']
-	return redirect(reverse('find:index'))
+class Reset(View):
+	def get(self, request):
+		if 'nameSearch' in request.session:
+			del request.session['nameSearch']
+			request.session['nameSearch'].clear()
+		return redirect(reverse('find:index'))
+	def post(self, request):
+		if 'nameSearch' in request.session:
+			del request.session['nameSearch']
+			request.session['nameSearch'].clear()
+		return redirect(reverse('find:index'))
 
 # Create your views here.
 # def index(request):
