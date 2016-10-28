@@ -17,9 +17,12 @@ class Find(View):
 		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
 		return redirect(reverse('find:results', kwargs={'name': name}))
 	def post(self, request, name):
-		name = request.POST['nameSearch']
-		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
-		return redirect(reverse('find:results', kwargs={'name': name}))
+		if 'nameSearch' in request.POST and request.POST['nameSearch'] != "":
+			name = request.POST['nameSearch']
+			request.session['nameSearch'] = name[0].upper() + name[1:].lower()
+			return redirect(reverse('find:results', kwargs={'name': name}))
+		else:
+			return redirect(reverse('find:index'))
 
 class Results(View):
 	def get(self, request, name):
