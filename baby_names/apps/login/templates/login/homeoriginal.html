@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Baby Names | Home</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>Baby Names</h1>
+    <ul>
+    {% if 'id' in request.session %}
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+    {% endif %}
+    </ul>
+</div>
+
+<div class="content">
+    <button><a href="{% url 'rand:index' %}">Random Name Generator</a></button>
+    <button><a href="{% url 'pop:index' %}">Most Popular Names</a></button>
+    <button><a href="{% url 'find:index' %}">Find My Name</a></button>
+
+    <h2>Daily Twitter Picks</h2>
+    <table>
+        <thead><tr>
+            <td>Name</td>
+            <td>Gender</td>
+            <td>Percentage of Population</td>
+        </tr></thead>
+        <tbody>
+        {% for tweet in all_tweets %}
+            <tr>
+                <td><a href="{% url 'find:find' tweet.0 %}">{{tweet.0}}</a></td>
+                <td>{{tweet.1}}</td>
+                <td>{{tweet.3}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>A Century of Names</title>
+<meta charset="utf-8">
+{% load staticfiles %}
+<!-- <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="{% static 'login/js/js.js' %}"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/> -->
+<!-- Add the slick-theme.css if you want default styling -->
+<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/> -->
+<!-- <link rel="stylesheet" href="{% static 'login/css/unslider.css' %}"> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'find/css/slick.css' %}"/> -->
+<!-- // Add the new slick-theme.css if you want the default styling -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'login/css/slick-theme.css' %}"/> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="apps/find/static/find/css/style.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}"> -->
+<!-- <script type="text/javascript">
+  $(document).ready(function ($) {
+
+    var jssor_1_options = {
+      $AutoPlay: true,
+      $AutoPlaySteps: 1,
+      $SlideDuration: 2000,
+      $SlideWidth: 300,
+      $SlideHeight: 300,
+      $SlideSpacing: 3,
+      $Cols: 3,
+      $ArrowNavigatorOptions: {
+        $Class: $JssorArrowNavigator$,
+        $Steps: 1
+      },
+      $BulletNavigatorOptions: {
+        $Class: $JssorBulletNavigator$,
+        $SpacingX: 1,
+        $SpacingY: 1
+      }
+    };
+
+    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+  });
+</script> -->
+</head>
+<body>
+
+    {% if 'id' in request.session %}
+    <a href="{% url 'login:logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
+    {% endif %}
+<div class="font58px">A Century of Names</div>
+<div>A searchable database of first names, 1910 through 2015</div>
+<div>Based on the records of Social Security Administration</div>
+<div><a href="{% url 'login:home' %}">Home</a></div>
+<div><a href="{% url 'rand:index' %}">Random Name Generator</a></div>
+<div><a href="{% url 'pop:index' %}">Most Popular Names</a></div>
+<div><a href="{% url 'find:index' %}">Find My Name</a></div>
+<div><a href="{% url 'faves:index' %}">Favorites</a></div>
+
+
+
+
+<div class="content"></div>
+
+</body>
+</html>
