@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^login$', views.login, name = 'login'),
     url(r'^loginRegistration$', views.index, name = 'loginRegistration'),
     url(r'^logout$', views.logout, name = 'logout'),
-    # url(r'^success$', views.success), ===>>> go back to the home page
+
 ]
