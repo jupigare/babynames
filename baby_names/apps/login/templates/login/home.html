@@ -22,7 +22,7 @@
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
       <a href="{% url 'login:logout' %}"> Logout </a>
     </p>
-    {{request.session.username}}!
+    {% if 'username' in request.session %}{{ request.session.username }}{% else %}Travis{% endif %}!
   {% else %}
     <p class="font16px">
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
