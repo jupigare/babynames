@@ -22,6 +22,7 @@ class Find(View):
 			request.session['nameSearch'] = name[0].upper() + name[1:].lower()
 			return redirect(reverse('find:results', kwargs={'name': name}))
 		else:
+			messages.error(request, 'Please enter a name to search.', extra_tags='find')
 			return redirect(reverse('find:index'))
 
 class Results(View):
