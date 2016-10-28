@@ -22,7 +22,7 @@
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
       <a href="{% url 'login:logout' %}"> Logout </a>
     </p>
-    Travis!
+    {% if 'username' in request.session %}{{ request.session.username }}{% else %}Travis{% endif %}!
   {% else %}
     <p class="font16px">
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
@@ -90,25 +90,28 @@
   <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
   <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
 </div>
-  <!-- #endregion Jssor Slider End -->
-<!-- <div class="permMark">Daily Twitter Picks</div>
-<div class="parens">(showing % of population)</div>
-<table>
-{% for tweet in all_tweets %}
-<tr>
-  <td>
-    <a href="{% url 'find:find' tweet.0 %}">
-      <span class="tab"> {{tweet.0}} </span>
-    </a>
-  </td>
-  <td>
-    <span class="tab"> {{tweet.1}} </span>
-  </td>
-  <td>
-    <span class="tab"> {{tweet.3}} </span>
-  </td>
-</tr>
-{% endfor %}
-</table> -->
+    <!-- #endregion Jssor Slider End -->
+
+<div class="content">
+    <h2>Daily Twitter Picks</h2>
+    <table>
+        <thead><tr>
+            <td>Name</td>
+            <td>Gender</td>
+            <td>Percentage of Population</td>
+        </tr></thead>
+        <tbody>
+        {% for tweet in all_tweets %}
+            <tr>
+                <td><a href="{% url 'find:find' tweet.0 %}">{{tweet.0}}</a></td>
+                <td>{{tweet.1}}</td>
+                <td>{{tweet.3}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p>Data courtesy of <a href="https://twitter.com/babynamesdaily" target="_blank">@babynamesdaily</a> on twitter.</p>
+</div>
+
 </body>
 </html>

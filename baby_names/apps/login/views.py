@@ -27,6 +27,7 @@ def login(request):
 	result = User.objects.login(request.POST['user'], request.POST['password'])
 	if result[0]:
 		request.session['id'] = result[1].id
+		request.session['username'] = result[1].username
 		return redirect('/')
 	else:
 		for error in result[1]:

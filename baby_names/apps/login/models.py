@@ -15,11 +15,11 @@ class LoginManager(models.Manager):
 		if User.objects.filter(username = user).exists() == True:
 			errors.append('Username already exists!')
 		if not name_regex.match(user):
-			errors.append('first name must be no fewer than 2 characters and letters only')
+			errors.append('Username must be no fewer than 2 characters and letters only.')
 		if not password_regex.match(passw):
-			errors.append('password must be no fewer than 8 characters')
+			errors.append('Password must be no fewer than 8 characters.')
 		if passw != confirm:
-			errors.append('passwords must match')
+			errors.append('Passwords must match.')
 		if len(errors) != 0:
 			return (False, errors)
 		else:
@@ -33,10 +33,10 @@ class LoginManager(models.Manager):
 		try:
 			result = User.objects.get(username = user)
 		except:
-			errors.append('Username does not exist')
+			errors.append('Username does not exist.')
 			return (False, errors)
 		if not bcrypt.hashpw(password.encode(), result.password.encode()) == result.password.encode():
-			errors.append('password is incorrect')
+			errors.append('Password is incorrect.')
 			return (False, errors)
 		return (True, result)
 
