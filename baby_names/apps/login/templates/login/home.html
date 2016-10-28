@@ -22,7 +22,7 @@
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
       <a href="{% url 'login:logout' %}"> Logout </a>
     </p>
-    Travis!
+    {{request.session.username}}!
   {% else %}
     <p class="font16px">
       <a href="{% url 'login:home' %}"> Home </a> &nbsp;
