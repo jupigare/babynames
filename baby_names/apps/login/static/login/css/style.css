@@ -54,7 +54,8 @@ a {
 }
 .parens {
   font-size: 10px;
-  /*margin-left: 5px;  */
+  width: 300px;
+  text-align: center;
 }
 .blanktag {
   position: absolute;
