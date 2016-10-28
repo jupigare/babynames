@@ -1,0 +1,223 @@
+/*
+font-family: 'Permanent Marker', cursive;
+font-family: 'Rock Salt', cursive;
+font-family: 'Gochi Hand', cursive;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Mono', monospace;
+*/
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	width: 1000px;
+	margin: 20px 40px;
+  font-family: 'Rock Salt', cursive;
+}
+table tr td, table tr td a {
+/*  font-size: 14px; */  
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Permanent Marker', cursive;
+}
+a {
+  text-decoration: none;
+}
+#tabs {
+  position: absolute;
+  width: 250px;
+  font-size: 10px;
+  /*z-index: -1;*/
+  top: 135px;
+  left: 650px;
+  background: transparent;
+  border: none;
+}
+.tab {
+  margin-right: 15px;
+}
+.twits {
+  margin-left: 80px;
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 14px;
+}
+.cred {
+  font-size: 6px;
+  margin-left: 80px;
+  margin-top: 30px;
+}
+.permMark {
+  font-family: 'Permanent Marker', cursive;
+  margin-left: 36px;  
+}
+.parens {
+  font-size: 10px;
+  width: 300px;
+  text-align: center;
+}
+.blanktag {
+  position: absolute;
+  left: 600px;
+  top: -70px;
+  z-index: -1;
+}
+.user {
+  position: absolute;
+  color: blue;
+  left: 690px;
+  top: 135px;
+  font-size: 57px;
+  font-family: 'Gochi Hand', cursive;
+  font-weight: bold;
+  transform: rotate(17deg);
+}
+.font57px {
+  font-size: 52px;
+  font-weight: bold;
+}
+.font12px {
+  font-size: 10px;
+  font-weight: bold;
+  position: relative;
+  left: 145px;
+}
+.font16px {
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  /*left: -10px;*/
+  top: 10px;
+  width: 100%
+}
+.font17px {
+  font-size: 1ypx;
+  font-weight: bold;
+  position: relative;
+  left: 50px;
+  width: 100%
+}
+.inlineBlock {
+  display: inline-block;
+}
+.favorites, .favorites a {
+  font-family: 'Permanent Marker', cursive;
+  font-weight: bold;
+  font-size: 44px;
+  /*color: red;*/
+  color: #ff0000;
+  height: 300px;
+  text-decoration: none;
+  background-image: url(../img/fave.png);
+  margin-left: 20px;
+}
+.popular, .popular a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 58px;
+  text-align: right;
+  color: #000080;
+  height: 300px;
+  text-decoration: none;
+  line-height: 58px;
+  /*opacity: 0.5;*/
+  background-image: url(../img/popnames.png);
+}
+.century, .century a {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  font-size: 26px;
+  text-align: center;
+  color: black;
+  height: 300px;
+  text-decoration: none;
+  line-height: 300px;
+  /*vertical-align: top;*/
+  /*opacity: 0.5;*/
+  background-image: url(../img/graph.png);
+  /*margin-right: 20px;*/
+}
+.rotate {
+  transform: rotate(-25deg);
+  position: relative;
+  left: 40px;
+  top: 30px;
+}
+.margin {
+  margin: 10px 0 45px 50px;
+  font-size: 12px;
+  /*margin-left: 20px;*/
+}
+.position50 {
+  position: relative;
+  top: 50px;
+  left: -10px;
+}
+.position20 {
+  position: relative;
+  top: 20px;
+}
+
+.borderTop {
+  border-top: 1px solid black;
+  width: 500px;
+  margin-left: 25px;
+  margin-top: 10px;
+}
+/*.border {
+	border: 2px solid black;
+	box-shadow: 4px 4px 4px #ddd
+}*/
+.jssorb03 {
+    position: absolute;
+}
+.jssorb03 div, .jssorb03 div:hover, .jssorb03 .av {
+  position: absolute;
+  /* size of bullet elment */
+  width: 21px;
+  height: 21px;
+  text-align: center;
+  line-height: 21px;
+  color: white;
+  font-size: 12px;
+  font-family: 'Roboto Mono', monospace;
+  background: url('../img/b03.png') no-repeat;
+  overflow: hidden;
+  cursor: pointer;
+}
+.jssorb03 div { background-position: -5px -4px; }
+.jssorb03 div:hover, .jssorb03 .av:hover { background-position: -35px -4px; }
+.jssorb03 .av { background-position: -65px -4px; }
+.jssorb03 .dn, .jssorb03 .dn:hover { background-position: -95px -4px; }
+
+  /* jssor slider arrow navigator skin 03 css */
+  
+/*  .jssora03l                  (normal)
+  .jssora03r                  (normal)
+  .jssora03l:hover            (normal mouseover)
+  .jssora03r:hover            (normal mouseover)
+  .jssora03l.jssora03ldn      (mousedown)
+  .jssora03r.jssora03rdn      (mousedown)
+  .jssora03l.jssora03ldn      (disabled)
+  .jssora03r.jssora03rdn      (disabled)*/
+  
+.jssora03l, .jssora03r {
+  display: block;
+  position: absolute;
+  /* size of arrow element */
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  background: url('../img/a03.png') no-repeat;
+  overflow: hidden;
+}
+.jssora03l { background-position: -3px -33px; }
+.jssora03r { background-position: -63px -33px; }
+.jssora03l:hover { background-position: -123px -33px; }
+.jssora03r:hover { background-position: -183px -33px; }
+.jssora03l.jssora03ldn { background-position: -243px -33px; }
+.jssora03r.jssora03rdn { background-position: -303px -33px; }
+.jssora03l.jssora03lds { background-position: -3px -33px; opacity: .3; pointer-events: none; }
+.jssora03r.jssora03rds { background-position: -63px -33px; opacity: .3; pointer-events: none; }
+

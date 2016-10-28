@@ -1,38 +1,121 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<title>Baby Names | Home</title>
 <meta charset="utf-8">
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Century of Names</title>
+<link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Open+Sans|Permanent+Marker|Roboto+Mono|Roboto:900|Rock+Salt" rel="stylesheet">
+<script src="{% static 'login/js/jquery-1.11.3.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'login/js/jssor.slider-21.1.6.mini.js' %}" type="text/javascript"></script>
+<script src="{% static 'login/js/js.js' %}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}">
+<style>
+.topNav {
+  font-size: 10px;
+  position: relative;
+  top: -20px;
+  left: -50px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 50px;
+}
+.topNav a {
+  text-decoration: none;
+  margin: 15px;
+}
+</style>
 </head>
 <body>
-
-<div class="header">
-    <h1>Baby Names</h1>
-    <ul>
+  <div class="topNav">
+    <a href="{% url 'login:home' %}">Home</a>
+    <a href="{% url 'rand:index' %}">Random Name Generator</a>
+    <a href="{% url 'pop:index' %}">The Popularity Contest</a>
+    <a href="{% url 'find:index' %}">A Name in Time</a>
+    <a href="{% url 'faves:index' %}">your faves</a>
     {% if 'id' in request.session %}
-        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
-        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+    <a href="{% url 'login:logout' %}">Logout</a>
     {% else %}
-        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
+    <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
     {% endif %}
-    </ul>
+  </div>
+
+  <img class="blanktag" src="{% static 'login/img/blanktag.png' %}" />
+  <div class="user">
+  {% if 'id' in request.session %}
+    <p class="font12px">
+      <a href="{% url 'login:home' %}"> Home </a> &nbsp;
+      <a href="{% url 'login:logout' %}"> Logout </a>
+    </p>
+    {% if 'username' in request.session %}{{ request.session.username }}{% else %}Travis{% endif %}!
+  {% else %}
+    <p class="font16px">
+      <a href="{% url 'login:home' %}"> Home </a> &nbsp;
+      <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
+    </p>
+  {% endif %}
+  </div>
+<div class="font57px">A Century of Names</div>
+<div>A searchable database of first names, 1910 through 2015</div>
+<div class="borderTop"></div>
+<div class="margin">Based on the records of the Social Security Administration</div>
+
+<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: -60px; width: 900px; height: 300px; overflow: hidden; visibility: hidden;">
+  <!-- Loading Screen -->
+  <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+      <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+      <div style="position:absolute;display:block;background:url({% static 'login/img/loading.gif' %}) no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+  </div>
+  <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 900px; height: 300px; overflow: hidden;">
+      <div class="favorites">
+        <a href="{% url 'faves:index' %}"><div class="rotate">your faves</div></a>
+      </div>
+      <div style="display: none;">
+        <a href="{% url 'rand:index' %}">
+        <img data-u="image" src="{% static 'login/img/random.png' %}" />
+        </a>
+      </div>
+      <div class="popular" style="display: none;">
+        <a href="{% url 'pop:index' %}"><div class="position50">The Popularity Contest</div></a>
+      </div>
+      <div class="century" style="display: none;">
+        <a href="{% url 'find:index' %}"><div class="position20">A Name in Time</div></a>
+      </div>
+      <div class="twits">
+        <div class="permMark">Daily Twitter Picks</div>
+        <div class="parens">&nbsp; &nbsp; Data from <a href="https://twitter.com/babynamesdaily" target="_blank">@babynamesdaily</a></div>
+        <table>
+        {% for tweet in all_tweets %}
+        <tr>
+          <td>
+            <a href="{% url 'find:find' tweet.0 %}">
+              <span class="tab"> {{tweet.0}} </span>
+            </a>
+          </td>
+          <td>
+            <span class="tab"> {{tweet.1}} </span>
+          </td>
+          <td>
+            <span class="tab"> {{tweet.3}} </span>
+          </td>
+        </tr>
+        {% endfor %}
+        </table>
+      </div>
+      <a data-u="any" href="http://www.jssor.com" style="display:none">Carousel</a>
+  </div>
+  <!-- Bullet Navigator -->
+  <div data-u="navigator" class="jssorb03" style="bottom:10px;right:10px;">
+      <!-- bullet navigator item prototype -->
+      <div data-u="prototype" style="width:21px;height:21px;">
+          <div data-u="numbertemplate"></div>
+      </div>
+  </div>
+  <!-- Arrow Navigator -->
+  <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
+  <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
+
 </div>
-
-<div class="content">
-    <!--put all your content here-->
-
-    <!-- <button><a href="">Favorites</a></button> -->
-    <button><a href="{% url 'rand:index' %}">Random Name Generator</a></button>
-    <button><a href="{% url 'pop:index' %}">Most Popular Names</a></button>
-    <button><a href="{% url 'find:index' %}">Find My Name</a></button>
-</div>
-
 </body>
 </html>

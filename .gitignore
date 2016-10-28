@@ -2,3 +2,4 @@
 py2DjangoEnv/
 babynames*.sql
 _ignoreme_*
+venv/
