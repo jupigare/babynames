@@ -15,6 +15,8 @@
     <h1>Find A Name</h1>
     <ul>
         <li><a href="{% url 'login:home' %}">Home</a></li>
+        <li><a href="{% url 'rand:index' %}">Random Name Generator</a></li>
+        <li><a href="{% url 'pop:index' %}">Most Popular Names</a></li>
     {% if 'id' in request.session %}
         <li><a href="{% url 'faves:index' %}">Favorites</a></li>
         <li><a href="{% url 'login:logout' %}">Logout</a></li>
@@ -33,7 +35,7 @@
                 <td><input type="text" name="nameSearch"></td>
                 <td><input type="submit" name="Search" value="Search"></td>
             </form>
-                <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td>
+                <!-- <td><a href="{% url 'find:reset' %}"><button>Reset</button></a></td> -->
         </tr>
     </table>
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from ..login.models import User
 from django.contrib import messages
 from django.views.generic import View
 from ..faves.models import Frequency, Favorites
@@ -82,7 +83,7 @@ class Filter(View):
 					request.session['yearFilter'] += "2015"
 			elif 'year' not in request.GET and request.GET['year']=="" and request.GET['yearStart']=="" and request.GET['yearEnd']=="":
 				request.session['yearFilter'] = 'all'
-			elif is_number(request.GET['year']) and isnumber(request.GET['year']):
+			elif isnumber(request.GET['year']) and isnumber(request.GET['year']):
 				if int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
 					request.session['yearFilter'] = request.GET['year']
 					whereclause += " and year=%s"

@@ -16,6 +16,8 @@
     <h1>Find A Name</h1>
     <ul>
         <li><a href="{% url 'login:home' %}">Home</a></li>
+        <li><a href="{% url 'pop:index' %}">Most Popular Names</a></li>
+        <li><a href="{% url 'find:index' %}">Find My Name</a></li>
     {% if 'id' in request.session %}
         <li><a href="{% url 'faves:index' %}">Favorites</a></li>
         <li><a href="{% url 'login:logout' %}">Logout</a></li>

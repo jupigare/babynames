@@ -4,12 +4,11 @@
 
 <title>Baby Names | My Favorites</title>
 <meta charset="utf-8">
-<!-- {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{ static '/style.css' }">
- -->
-
-<!-- JQUERY -->
-
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/jquery-ui.css' %}">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 
@@ -17,10 +16,13 @@
     <h1>My Favorites</h1>
     <ul>
         <li><a href="{% url 'login:home' %}">Home</a></li>
+        <li><a href="{% url 'rand:index' %}">Random Name Generator</a></li>
+        <li><a href="{% url 'pop:index' %}">Most Popular Names</a></li>
+        <li><a href="{% url 'find:index' %}">Find My Name</a></li>
     {% if 'id' in request.session %}
         <li><a href="{% url 'login:logout' %}">Logout</a></li>
     {% else %}
-        <li><a href="{% url 'login:login' %}">Login/Register</a></li>
+        <li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
     {% endif %}
     </ul>
 </div>
@@ -29,6 +31,20 @@
     {% for name in userlist %}
         <p><a href="{% url 'find:find' name.frequency_id.name %}">{{name.frequency_id.name}}</a> <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
     {% endfor %}
+    {% for name in newnames %}
+        <p><a href="{% url 'find:find' name.name %}">{{name.name}}</a> <a href="{% url 'faves:delnew' name.id %}">remove</a></p>
+    {% endfor %}
+    Add a new name:
+    <form action="newname" method="post">
+        {% csrf_token %}
+        <input type="text" name="newname">
+        <input type="submit" name="Add">
+    </form>
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
 </div>
 
 </body>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .. faves .models import Frequency, Favorites
-
+from ..login.models import User
 import random
 import pdb
+from ..faves.models import Frequency, Favorites
 
 def index(request):
     return render(request, 'rand/rand.html')
