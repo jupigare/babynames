@@ -10,11 +10,43 @@ font-family: 'Roboto Mono', monospace;
 	margin: 0px;
 	padding: 0px;
 }
-
 body {
 	width: 1000px;
 	margin: 20px 40px;
   font-family: 'Rock Salt', cursive;
+}
+table tr td, table tr td a {
+/*  font-size: 14px; */  
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Permanent Marker', cursive;
+}
+#tabs {
+  position: absolute;
+  width: 250px;
+  font-size: 10px;
+  /*z-index: -1;*/
+  top: 135px;
+  left: 650px;
+  background: transparent;
+  border: none;
+}
+.tab {
+  margin-right: 15px;
+}
+.twits {
+  margin-left: 80px;
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 17px;
+}
+.permMark {
+  font-family: 'Permanent Marker', cursive;
+  margin-left: 36px;  
+}
+.parens {
+  font-size: 10px;
+  margin-left: 22px;  
 }
 .blanktag {
   position: absolute;
@@ -27,13 +59,13 @@ body {
   color: blue;
   left: 690px;
   top: 135px;
-  font-family: 'Gochi Hand', cursive;
   font-size: 57px;
+  font-family: 'Gochi Hand', cursive;
   font-weight: bold;
   transform: rotate(17deg);
 }
 .font57px {
-  font-size: 57px;
+  font-size: 52px;
   font-weight: bold;
 }
 .font12px {
@@ -46,8 +78,19 @@ body {
   font-size: 16px;
   font-weight: bold;
   position: relative;
+  /*left: -10px;*/
+  top: 10px;
+  width: 100%
+}
+.font17px {
+  font-size: 1ypx;
+  font-weight: bold;
+  position: relative;
   left: 50px;
   width: 100%
+}
+.inlineBlock {
+  display: inline-block;
 }
 .favorites, .favorites a {
   font-family: 'Permanent Marker', cursive;
@@ -93,7 +136,7 @@ body {
   top: 30px;
 }
 .margin {
-  margin: 10px 0 30px 60px;
+  margin: 10px 0 45px 50px;
   font-size: 12px;
   /*margin-left: 20px;*/
 }
@@ -113,18 +156,10 @@ body {
   margin-left: 25px;
   margin-top: 10px;
 }
-
-
-.border {
+/*.border {
 	border: 2px solid black;
 	box-shadow: 4px 4px 4px #ddd
-}
-
-.content {
-	text-align: center;
-}
-
-
+}*/
 .jssorb03 {
     position: absolute;
 }
