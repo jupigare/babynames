@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Frequency, Favorites
 from ..login.models import User
+from .models import Frequency, Favorites
 from twython import Twython, TwythonError
 
 t = Twython(

@@ -49,7 +49,6 @@ def home(request):
 				temp2 = ['Gender', 'Male']
 			temp.append(temp2)
 		allTweets.append([temp[0][1].strip(),temp[1][1].strip(),temp[2][1],temp[3][1]])
-	print allTweets
 	context = {'all_tweets':allTweets}
 	return render(request, 'login/home.html', context)
 
