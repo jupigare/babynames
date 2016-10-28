@@ -1,0 +1,9 @@
+/find/
+	if you press Search without entering anything, you'll get an IndexError
+	/find/reset not working
+
+/pop/
+	if you try to filter without entering a single Year, NameError at popular/filter: global name 'is_number' is not defined
+
+/faves/
+	cannot add newname; urls.py file throws an error
