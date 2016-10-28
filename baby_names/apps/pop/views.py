@@ -4,12 +4,8 @@ from django.contrib import messages
 from django.views.generic import View
 from ..faves.models import Frequency, Favorites
 
-def isnumber(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+def is_number(something):
+	return True
 
 class Index(View):
 	def get(self, request):
@@ -69,21 +65,25 @@ class Filter(View):
 			if 'yearStart' in request.GET and 'yearEnd' in request.GET and request.GET['yearStart']>request.GET['yearEnd']:
 				messages.error(request, 'Invalid year range entered.', extra_tags='pop')
 			elif request.GET['yearStart']!="" or request.GET['yearEnd']!="":
-				if 'yearStart' in request.GET and request.GET:
+				if 'yearStart' in request.GET and request.GET['yearStart']!="":
 					request.session['yearFilter'] = "from "+request.GET['yearStart']+" to "
 					whereclause += " and year>=%s"
 					name_dict.append(int(request.GET['yearStart']))
 				else:
 					request.session['yearFilter'] = "from 1910 to "
-				if 'yearEnd' in request.GET:
+					whereclause += " and year>=%s"
+					name_dict.append('1910')
+				if 'yearEnd' in request.GET and request.GET['yearEnd']!="":
 					request.session['yearFilter'] += request.GET['yearEnd']
 					whereclause += " and year<=%s"
 					name_dict.append(int(request.GET['yearEnd']))
 				else:
 					request.session['yearFilter'] += "2015"
+					whereclause += " and year<=%s"
+					name_dict.append('2015')
 			elif 'year' not in request.GET and request.GET['year']=="" and request.GET['yearStart']=="" and request.GET['yearEnd']=="":
 				request.session['yearFilter'] = 'all'
-			elif isnumber(request.GET['year']) and isnumber(request.GET['year']):
+			elif request.GET['year'].isnumeric() and request.GET['year'].isnumeric():
 				if int(request.GET['year'])>=1910 and int(request.GET['year'])<=2015:
 					request.session['yearFilter'] = request.GET['year']
 					whereclause += " and year=%s"
