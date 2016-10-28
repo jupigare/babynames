@@ -17,6 +17,7 @@ class Find(View):
 		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
 		return redirect(reverse('find:results', kwargs={'name': name}))
 	def post(self, request, name):
+		request.POST['nameSearch'] = request.POST['nameSearch'].encode()
 		if 'nameSearch' in request.POST and len(request.POST['nameSearch'])>0 and request.POST['nameSearch']!="0":
 			name = request.POST['nameSearch']
 			request.session['nameSearch'] = name[0].upper() + name[1:].lower()
