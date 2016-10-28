@@ -46,9 +46,9 @@ def newname(request):
 		messages.error(request, "Error: Name "+newName+" already in Favorites.")
 		return redirect(reverse('faves:index'))
 	else:
-		if Newnames.objects.filter(name = newName).exists():
-			messages.error(request, "Error: Name "+newName+" already in Favorites.")
-			return redirect(reverse('faves:index'))
+		# if Newnames.objects.filter(name = newName).exists():
+		# 	messages.error(request, "Error: Name "+newName+" already in Favorites.")
+			# return redirect(reverse('faves:index'))
 	user = User.objects.get(id = request.session['id'])
 	Newnames.objects.create(user_id = user, name = newName)
 	return redirect(reverse('faves:index'))
