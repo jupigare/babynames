@@ -76,6 +76,7 @@
         </tr>
         {% endfor %}
         </table>
+        <p class="parens">Data courtesy of <a href="https://twitter.com/babynamesdaily" target="_blank">@babynamesdaily</a> on twitter.</p>
       </div>
       <a data-u="any" href="http://www.jssor.com" style="display:none">Carousel</a>
   </div>
@@ -92,26 +93,7 @@
 </div>
     <!-- #endregion Jssor Slider End -->
 
-<div class="content">
-    <h2>Daily Twitter Picks</h2>
-    <table>
-        <thead><tr>
-            <td>Name</td>
-            <td>Gender</td>
-            <td>Percentage of Population</td>
-        </tr></thead>
-        <tbody>
-        {% for tweet in all_tweets %}
-            <tr>
-                <td><a href="{% url 'find:find' tweet.0 %}">{{tweet.0}}</a></td>
-                <td>{{tweet.1}}</td>
-                <td>{{tweet.3}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <p>Data courtesy of <a href="https://twitter.com/babynamesdaily" target="_blank">@babynamesdaily</a> on twitter.</p>
-</div>
+
 
 </body>
 </html>
