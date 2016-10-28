@@ -29,6 +29,20 @@
     {% for name in userlist %}
         <p><a href="{% url 'find:find' name.frequency_id.name %}">{{name.frequency_id.name}}</a> <a href="{% url 'faves:delfav' name.frequency_id.id %}">remove</a></p>
     {% endfor %}
+    {% for name in newnames %}
+        <p><a href="{% url 'find:find' name.name %}">{{name.name}}</a> <a href="{% url 'faves:delnew' name.id %}">remove</a></p>
+    {% endfor %}
+    Add a new name:
+    <form action="newname" method="post">
+        {% csrf_token %}
+        <input type="text" name="newname">
+        <input type="submit" name="Add">
+    </form>
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
 </div>
 
 </body>
