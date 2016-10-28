@@ -17,6 +17,14 @@ class Find(View):
 		request.session['nameSearch'] = name[0].upper() + name[1:].lower()
 		return redirect(reverse('find:results', kwargs={'name': name}))
 	def post(self, request, name):
+		name = request.POST['nameSearch']
+		try:
+			request.session['nameSearch'] = name[0].upper() + name[1:].lower()
+			return redirect(reverse('find:results', kwargs={'name': name}))
+		except (ValueError,IndexError):
+			print IndexError
+			messages.error(request, 'Please enter a name to search.', extra_tags='find')
+			return redirect(reverse('find:index'))
 		# request.POST['nameSearch'] = request.POST['nameSearch'].encode()
 		# if 'nameSearch' in request.POST and len(request.POST['nameSearch'])>0 and request.POST['nameSearch']!="0":
 		# 	name = request.POST['nameSearch']
@@ -25,14 +33,6 @@ class Find(View):
 		# else:
 		# 	messages.error(request, 'Please enter a name to search.', extra_tags='find')
 		# 	return redirect(reverse('find:index'))
-		name = request.POST['nameSearch']
-		try:
-				print "NAME:", name[0:]
-				request.session['nameSearch'] = name[0].upper() + name[1:].lower()
-				return redirect(reverse('find:results', kwargs={'name': name}))
-		except IndexError:
-				messages.error(request, 'Please enter a name to search.', extra_tags='find')
-				return redirect(reverse('find:index'))
 
 class Results(View):
 	def get(self, request, name):

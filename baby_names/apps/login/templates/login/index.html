@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<title>Baby Names | Page Title Here</title>
+<title>Baby Names | Login & Registration</title>
 <meta charset="utf-8">
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
@@ -13,11 +13,15 @@
 <body>
 
 <div class="header">
-    <h1>LOGIN AND REGISTRATION</h1>
+    <h1>Login & Registration</h1>
+    <ul>
+        <li><a href="{% url 'rand:index' %}">Random Name Generator</a></li>
+        <li><a href="{% url 'pop:index' %}">Most Popular Names</a></li>
+        <li><a href="{% url 'find:index' %}">Find My Name</a></li>
+    </ul>
 </div>
 
 <div class="content">
-    <!--put all your content here-->
     {% for message in messages %}
         <p style="background-color:red;">{{message}}</p>
     {% endfor %}

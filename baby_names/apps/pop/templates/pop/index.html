@@ -27,11 +27,13 @@
 
 <div class="header">
 	<h1>Top 100 Popular Names</h1>
-	<ul>
-		<li><a href="{% url 'login:home' %}">Home</a></li>
-	{% if 'id' in request.session %}
-		<li><a href="{% url 'faves:index' %}">Favorites</a></li>
-		<li><a href="{% url 'login:logout' %}">Logout</a></li>
+    <ul>
+        <li><a href="{% url 'login:home' %}">Home</a></li>
+        <li><a href="{% url 'rand:index' %}">Random Name Generator</a></li>
+        <li><a href="{% url 'find:index' %}">Find My Name</li>
+    {% if 'id' in request.session %}
+        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
 	{% else %}
 		<li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
 	{% endif %}
