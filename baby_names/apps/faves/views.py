@@ -34,11 +34,12 @@ def delfav(request, id):
 	return redirect(reverse('faves:index'))
 
 def newname(request):
-	userlist = Favorites.objects.filter(user_id=request.session['id'])
-		
+	userlist = Favorites.objects.filter(user_id=request.session['id'])	
 	newName = request.POST['newname'][0].upper() + request.POST['newname'][1:].lower()
 	newName = newName.encode()
 	checknames = []
+	if len(request.POST['newname']) < 1:
+		messages.error(request, "Please enter a name to")
 	for name in userlist:
 		checknames.append(name.frequency_id.name)
 	if newName in checknames:
