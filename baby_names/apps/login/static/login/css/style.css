@@ -21,6 +21,9 @@ table tr td, table tr td a {
   text-decoration: none;
   font-family: 'Permanent Marker', cursive;
 }
+a {
+  text-decoration: none;
+}
 #tabs {
   position: absolute;
   width: 250px;
@@ -38,7 +41,12 @@ table tr td, table tr td a {
   margin-left: 80px;
   margin-top: 30px;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 14px;
+}
+.cred {
+  font-size: 6px;
+  margin-left: 80px;
+  margin-top: 30px;
 }
 .permMark {
   font-family: 'Permanent Marker', cursive;
@@ -46,7 +54,7 @@ table tr td, table tr td a {
 }
 .parens {
   font-size: 10px;
-  margin-left: 22px;  
+  /*margin-left: 5px;  */
 }
 .blanktag {
   position: absolute;

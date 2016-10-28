@@ -49,9 +49,9 @@ def newname(request):
 		# if Newnames.objects.filter(name = newName).exists():
 		# 	messages.error(request, "Error: Name "+newName+" already in Favorites.")
 			# return redirect(reverse('faves:index'))
-	user = User.objects.get(id = request.session['id'])
-	Newnames.objects.create(user_id = user, name = newName)
-	return redirect(reverse('faves:index'))
+		user = User.objects.get(id = request.session['id'])
+		Newnames.objects.create(user_id = user, name = newName)
+		return redirect(reverse('faves:index'))
 
 def delnew(request, id):
 	name_id = id

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<title>Baby Names | Top 100 Popular Names</title>
+<title>A Century of Names | Top 100 Popular Names</title>
 <meta charset="utf-8">
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
@@ -22,26 +22,247 @@
 	}
 	.pop_results td.number {text-align: right;}
 </style> -->
+<link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Open+Sans|Permanent+Marker|Roboto+Mono|Roboto:900|Rock+Salt" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
+<style>
+/*
+font-family: 'Permanent Marker', cursive;
+font-family: 'Rock Salt', cursive;
+font-family: 'Gochi Hand', cursive;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Mono', monospace;
+*/
+*{
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  width: 1000px;
+  margin: 20px 40px;
+  font-family: 'Rock Salt', cursive;
+}
+table tr td, table tr td a {
+/*  font-size: 14px; */  
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Permanent Marker', cursive;
+}
+
+#tabs {
+  position: absolute;
+  width: 250px;
+  font-size: 10px;
+  /*z-index: -1;*/
+  top: 135px;
+  left: 650px;
+  background: transparent;
+  border: none;
+}
+.tab {
+  margin-right: 15px;
+}
+.twits {
+  margin-left: 80px;
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 14px;
+}
+.cred {
+  font-size: 6px;
+  margin-left: 80px;
+  margin-top: 30px;
+}
+.permMark {
+  font-family: 'Permanent Marker', cursive;
+  margin-left: 36px;  
+}
+.parens {
+  font-size: 10px;
+  /*margin-left: 5px;  */
+}
+.blanktag {
+  position: absolute;
+  left: 600px;
+  top: -70px;
+  z-index: -1;
+}
+.user {
+  position: absolute;
+  color: blue;
+  left: 690px;
+  top: 135px;
+  font-size: 57px;
+  font-family: 'Gochi Hand', cursive;
+  font-weight: bold;
+  transform: rotate(17deg);
+}
+.font57px {
+  font-size: 52px;
+  font-weight: bold;
+}
+.font12px {
+  font-size: 10px;
+  font-weight: bold;
+  position: relative;
+  left: 145px;
+}
+.font16px {
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  /*left: -10px;*/
+  top: 10px;
+  width: 100%
+}
+.font17px {
+  font-size: 1ypx;
+  font-weight: bold;
+  position: relative;
+  left: 50px;
+  width: 100%
+}
+.inlineBlock {
+  display: inline-block;
+}
+.favorites, .favorites a {
+  font-family: 'Permanent Marker', cursive;
+  font-weight: bold;
+  font-size: 44px;
+  /*color: red;*/
+  color: #ff0000;
+  height: 300px;
+  text-decoration: none;
+  background-image: url(../img/fave.png);
+  margin-left: 20px;
+}
+.popular, .popular a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 58px;
+  text-align: right;
+  color: #000080;
+  height: 300px;
+  text-decoration: none;
+  line-height: 58px;
+  /*opacity: 0.5;*/
+  background-image: url(../img/popnames.png);
+}
+.century, .century a {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  font-size: 26px;
+  text-align: center;
+  color: black;
+  height: 300px;
+  text-decoration: none;
+  line-height: 300px;
+  /*vertical-align: top;*/
+  /*opacity: 0.5;*/
+  background-image: url(../img/graph.png);
+  /*margin-right: 20px;*/
+}
+.rotate {
+  transform: rotate(-25deg);
+  position: relative;
+  left: 40px;
+  top: 30px;
+}
+.margin {
+  margin: 10px 0 45px 50px;
+  font-size: 12px;
+  /*margin-left: 20px;*/
+}
+.position50 {
+  position: relative;
+  top: 50px;
+  left: -10px;
+}
+.position20 {
+  position: relative;
+  top: 20px;
+}
+
+.borderTop {
+  border-top: 1px solid black;
+  width: 500px;
+  margin-left: 25px;
+  margin-top: 10px;
+}
+.topNav {
+  font-size: 10px;
+  position: relative;
+  top: -20px;
+  left: -50px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 50px;
+}
+.topNav a {
+  text-decoration: none;
+  margin: 15px;
+}
+.filters {
+	position: absolute;
+	top: 475px;
+	font-size: 12px;
+	font-family: 'Permanent Marker', cursive;
+}
+.pop_results {
+	position: absolute;
+	top: 475px;
+	right: 300px;
+}
+h3 {
+	width: 800px;
+	text-align: center;
+}
+h2 {
+	width: 800px;
+	text-align: center;
+	font-size: 50px;
+	font-family: 'Permanent Marker', cursive;
+}
+.gold {
+	color: gold;
+}
+</style>
 </head>
 <body>
-
-<div class="header">
-	<h1>Top 100 Popular Names</h1>
-    <ul>
-        <li><a href="{% url 'login:home' %}">Home</a></li>
-        <li><a href="{% url 'rand:index' %}">Random Name Generator</a></li>
-        <li><a href="{% url 'find:index' %}">Find My Name</li>
+  <div class="topNav">
+    <a href="{% url 'login:home' %}">Home</a>
+    <a href="{% url 'rand:index' %}">Random Name Generator</a>
+    <a href="{% url 'pop:index' %}">The Popularity Contest</a>
+    <a href="{% url 'find:index' %}">A Name in Time</a>
+    <a href="{% url 'faves:index' %}">your faves</a>
     {% if 'id' in request.session %}
-        <li><a href="{% url 'faves:index' %}">Favorites</a></li>
-        <li><a href="{% url 'login:logout' %}">Logout</a></li>
-	{% else %}
-		<li><a href="{% url 'login:loginRegistration' %}">Login/Register</a></li>
-	{% endif %}
-	</ul>
-</div>
+    <a href="{% url 'login:logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
+    {% endif %}
+  </div>
 
-<div class="content">
-	<h2>Results for 
+  <img class="blanktag" src="{% static 'login/img/blanktag.png' %}" />
+  <div class="user">
+  {% if 'id' in request.session %}
+    <p class="font12px">
+      <a href="{% url 'login:home' %}"> Home </a> &nbsp;
+      <a href="{% url 'login:logout' %}"> Logout </a>
+    </p>
+    {% if 'username' in request.session %}{{ request.session.username }}{% else %}Travis{% endif %}!
+  {% else %}
+    <p class="font16px">
+      <a href="{% url 'login:home' %}"> Home </a> &nbsp;
+      <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
+    </p>
+  {% endif %}
+  </div>
+<div class="font57px">A Century of Names</div>
+<div>A searchable database of first names, 1910 through 2015</div>
+<div class="borderTop"></div>
+<div class="margin">Based on the records of the Social Security Administration</div>
+<h2><span class="gold">&#9733;</span>THE TOP 100<span class="gold">&#9733;</span></h2>
+<h3>Results for 
 		{% if request.session.genderFilter == 'M' %} males,
 			{% elif request.session.genderFilter == 'F' %} females,
 			{% else %} both males and females,
@@ -51,9 +272,9 @@
 		{% endif %}
 		{% if request.session.yearFilter == 'all' %} every year from 1910-2015
 			{% else %} year {{request.session.yearFilter}}
-		{% endif %}</h2>
+		{% endif %}</h3>
 	<form class="filters" action="{% url 'pop:filter' %}" method="GET">
-		<h3>Filter Results:</h3>
+		<p>Filter Results:</p>
 		<p>Gender
 			<label>
 				<input type="radio" name="gender" value="">Both
@@ -118,10 +339,15 @@
 				<td class="number">{{n.count}}</td> <!--need to align right-->
 			</tr>
 			{% endfor %}
+			<tr>
+				<td>
+					<a href="#"><button>back to top</button></a>
+				</td>
+			</tr>
 		</tbody>
 	</table>
-	<p><a href="#"><button>back to top</button></a></p>
-</div>
 
+<footer>
+</footer>
 </body>
 </html>
