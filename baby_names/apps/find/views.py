@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from ..login.models import User
 from django.views.generic import View
-
-from ..faves.models import Frequency, Favorites
-
 from bokeh.plotting import figure, ColumnDataSource
 from bokeh.resources import CDN
 from bokeh.models import Title, HoverTool
 from bokeh.embed import components
-
+from ..faves.models import Frequency, Favorites
 
 class Index(View):
 	def get(self, request):

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from ..login.models import User
 from django.contrib import messages
 from django.views.generic import View
 from ..faves.models import Frequency, Favorites
