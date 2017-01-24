@@ -25,6 +25,7 @@
 <link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Open+Sans|Permanent+Marker|Roboto+Mono|Roboto:900|Rock+Salt" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static 'find/css/style.css' %}">
 <style>
+.content { text-align:center; }
 /*
 font-family: 'Permanent Marker', cursive;
 font-family: 'Rock Salt', cursive;
@@ -211,7 +212,7 @@ table tr td, table tr td a {
 .pop_results {
 	position: absolute;
 	top: 475px;
-	right: 300px;
+	left: 300px;
 }
 h3 {
 	width: 800px;
@@ -318,7 +319,7 @@ h2 {
     {% if messages %}{% for message in messages %}{% if 'pop' in message.tags %}<h2 class="{{ message.tags }}">{{ message }}</h2>{% endif %}{% endfor %}{% endif %}
 
 	<table class="pop_results">
-		<thead><tr>
+	<thead><tr>
 			{% if 'id' in request.session %}<td>Fave</td>{% endif %}
 			<td>Rank</td>
 			<td>Name</td>
