@@ -11,6 +11,10 @@ t = Twython(
 	)
 
 def index(request):
+	try: 
+		request.session['id']
+	except:
+		return redirect(reverse('login:loginRegistration'))
 	names = Frequency.objects.all()
 	user = User.objects.get(id = request.session['id'])	
 	userlist = Favorites.objects.filter(user_id = request.session['id'])
