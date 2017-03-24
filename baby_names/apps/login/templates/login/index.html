@@ -21,10 +21,38 @@
         $( "#tabs" ).tabs();
     } );
 </script>
+<style type="text/css">
+  .topNav {
+  font-size: 10px;
+  position: relative;
+  top: -20px;
+  left: -50px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 50px;
+}
+.topNav a {
+  text-decoration: none;
+  margin: 15px;
+}
+</style>
 </head>
 <body>
+<div class="topNav">
+    <a href="{% url 'login:home' %}">Home</a>
+    <a href="{% url 'rand:index' %}">Random Name Generator</a>
+    <a href="{% url 'pop:index' %}">The Popularity Contest</a>
+    <a href="{% url 'find:index' %}">A Name in Time</a>
+    <a href="{% url 'faves:index' %}">your faves</a>
+    {% if 'id' in request.session %}
+    <a href="{% url 'login:logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login:loginRegistration' %}">Login/Register</a>
+    {% endif %}
+  </div>
 <img class="blanktag" src="{% static 'login/img/blanktag.png' %}" />
 
+<h1>&nbsp &nbsp &nbsp &nbsp Please sign in ---> </h1>
 <div id="tabs" class="user">
   <ul>
     <li><a href="#tabs-1">Login</a></li>

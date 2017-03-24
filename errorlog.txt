@@ -1,2 +1,0 @@
-/find/
-	/find/reset not working <-- removed it
